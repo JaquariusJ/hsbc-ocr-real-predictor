@@ -12,7 +12,6 @@ import java.util.concurrent.TimeUnit;
  */
 @Data
 @Component
-@ConfigurationProperties("retrofit")
 public class RetrofitConfig {
 
     private String baseUrl;
