@@ -37,7 +37,7 @@ public class RetrofitCluster  {
 
     @PostConstruct
     public void init(){
-        //扫描改包下的RetrofitClient注解，将被注解类全部构建，并注入到spring容器中
+        //扫描改包下的RetrofitClient注解，将被注解类全部创建，并注入到spring容器中
         Reflections f = new Reflections(PACKGE);
         Set<Class<?>> svcs = f.getTypesAnnotatedWith(RetrofitClient.class);
         svcs.forEach(svcClass -> {

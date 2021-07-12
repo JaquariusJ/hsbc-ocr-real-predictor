@@ -19,14 +19,7 @@ public class RetrofitTest {
     @Autowired
     private SocrConfig socrConnectConfig;
 
-    @Autowired
-    private Person person;
 
-    @Test
-    public void test1(){
-        System.out.println(socrConnectConfig);
-        System.out.println(person);
-    }
 
 
 }
