@@ -9,7 +9,7 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 @RetrofitClient(config = SocrConfig.class)
-public interface SocrService {
+public interface SocrService extends OcrService<SocrRequestVo> {
 
     @POST("/lab/ocr/predict/ticket")
     Call<String> ocr(@Body SocrRequestVo socrRequestVo);
