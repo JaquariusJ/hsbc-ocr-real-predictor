@@ -1,6 +1,7 @@
 package com._4paradim.hsbc.ocr.server.web.service;
 
 
+import com._4paradim.hsbc.ocr.server.api.service.SocrService;
 import com._4paradim.hsbc.ocr.server.api.vo.SocrRequestVo;
 import com._4paradim.hsbc.ocr.server.common.exception.BusinessException;
 import com._4paradim.hsbc.ocr.server.common.exception.OcrException;
@@ -12,6 +13,8 @@ import com.google.gson.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import retrofit2.Call;
+import retrofit2.Response;
 
 import java.io.IOException;
 import java.util.Map;
@@ -21,39 +24,25 @@ import java.util.Map;
 public class PredictorService {
 
     private static Gson gson = new GsonBuilder().create();
-
     @Autowired
-    private IDCardService idCardService;
+    private SocrService socrService;
 
-    @Autowired
-    private BusinessLicenseService businessLicenseService;
-
-    @Autowired
-    private VATService vatService;
-
-    public String predictor(PredictorRequestVO requestVo, FileVO fileVO) throws IOException, OcrException, BusinessException {
+    public String predictor(String requestParam, FileVO fileVO) throws IOException, OcrException, BusinessException {
+        PredictorRequestVO requestVo = gson.fromJson(requestParam, PredictorRequestVO.class);
         String docType = requestVo.getDocType();
-        SocrRequestVo socrRequestVo = new SocrRequestVo();
         DocType docTypeEnum = DocType.getValueByType(docType);
+        SocrRequestVo socrRequestVo = new SocrRequestVo();
         socrRequestVo.setImage(fileVO.getBasefile());
         socrRequestVo.setScene(docTypeEnum.getScene());
         socrRequestVo.getParameters().put("vis_flag",false);
-        String result = null;
-            result = "";
-            switch (docTypeEnum){
-                case IDCard:
-                    result = idCardService.ocr(socrRequestVo);
-                    break;
-                case BusinessLicense:
-                    result = businessLicenseService.ocr(socrRequestVo);
-                    break;
-                case VAT:
-                    result = vatService.ocr(socrRequestVo);
-                    break;
-                default:
-                    break;
-            }
-
+        Call<String> reponse = socrService.ocr(socrRequestVo);
+        Response<String> execute = reponse.execute();
+        int code = execute.code();
+        if(code != 200){
+            String message = execute.message();
+            throw new OcrException(message);
+        }
+        String result = execute.body();
         final Map resultMap = Maps.newHashMap();;
         try {
             JsonParser jsonParser = new JsonParser();

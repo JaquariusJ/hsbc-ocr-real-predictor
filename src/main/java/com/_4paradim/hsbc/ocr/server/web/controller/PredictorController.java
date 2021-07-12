@@ -29,14 +29,13 @@ public class PredictorController {
     private static final Gson gson = new Gson();
 
     @PostMapping("/predictor")
-    public PredictorResponseVO predictor(@RequestParam("file") MultipartFile file, @RequestParam("data") String data, @RequestParam("appCode") String appCode) throws BusinessException, OcrException, IOException {
-        PredictorRequestVO predictorRequestVO = gson.fromJson(data, PredictorRequestVO.class);
+    public PredictorResponseVO predictor(@RequestParam("file") MultipartFile file, @RequestParam("data") String request, @RequestParam("appCode") String appCode) throws BusinessException, OcrException, IOException {
         FileVO fileVO = new FileVO();
         fileVO.setBasefile(new String(Base64.encodeBase64(file.getBytes())));
         fileVO.setFilename(file.getOriginalFilename());
         fileVO.setFilesize(file.getSize());
-        String result = predictorService.predictor(predictorRequestVO, fileVO);
-        return PredictorReponseResult.success(predictorRequestVO, result);
+        String result = predictorService.predictor(request, fileVO);
+        return PredictorReponseResult.success(request, result);
     }
 
 

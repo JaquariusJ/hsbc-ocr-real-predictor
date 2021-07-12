@@ -16,22 +16,17 @@ import javax.servlet.http.HttpServletRequest;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    private static final Gson gson = new Gson();
-
-
     @ExceptionHandler(OcrException.class)
     public PredictorResponseVO ocrException(HttpServletRequest request,Exception e){
         String data = request.getParameter("data");
-        PredictorRequestVO predictorRequestVO = gson.fromJson(data, PredictorRequestVO.class);
         e.printStackTrace();
-        return PredictorReponseResult.failed(predictorRequestVO, ResponseType.PLATFROM_ERROR,e.getMessage());
+        return PredictorReponseResult.failed(data, ResponseType.PLATFROM_ERROR,e.getMessage());
     }
 
     @ExceptionHandler(Exception.class)
     public PredictorResponseVO Exception(HttpServletRequest request,Exception e){
         String data = request.getParameter("data");
-        PredictorRequestVO predictorRequestVO = gson.fromJson(data, PredictorRequestVO.class);
         e.printStackTrace();
-        return PredictorReponseResult.failed(predictorRequestVO, ResponseType.SERVER_ERRROR,e.getMessage());
+        return PredictorReponseResult.failed(data, ResponseType.SERVER_ERRROR,e.getMessage());
     }
 }

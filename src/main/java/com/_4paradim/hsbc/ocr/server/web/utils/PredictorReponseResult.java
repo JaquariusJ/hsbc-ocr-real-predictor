@@ -6,7 +6,7 @@ import com._4paradim.hsbc.ocr.server.web.vo.PredictorResponseVO;
 
 public class PredictorReponseResult {
 
-    public static PredictorResponseVO success(PredictorRequestVO request,String result){
+    public static PredictorResponseVO success(String request,String result){
         PredictorResponseVO responseVO = new PredictorResponseVO();
         responseVO.setErrorMsg(null);
         responseVO.setResultCode(ResponseType.SUCCESS.getMessage());
@@ -15,7 +15,7 @@ public class PredictorReponseResult {
         return responseVO;
     }
 
-    public static PredictorResponseVO failed(PredictorRequestVO request,ResponseType responseType){
+    public static PredictorResponseVO failed(String request,ResponseType responseType){
         PredictorResponseVO responseVO = new PredictorResponseVO();
         responseVO.setErrorMsg(responseType.getDesc());
         responseVO.setResultCode(responseType.getMessage());
@@ -24,7 +24,7 @@ public class PredictorReponseResult {
         return responseVO;
     }
 
-    public static PredictorResponseVO failed(PredictorRequestVO request,ResponseType responseType,String e){
+    public static PredictorResponseVO failed(String request,ResponseType responseType,String e){
         PredictorResponseVO responseVO = new PredictorResponseVO();
         responseVO.setErrorMsg(e);
         responseVO.setResultCode(responseType.getMessage());

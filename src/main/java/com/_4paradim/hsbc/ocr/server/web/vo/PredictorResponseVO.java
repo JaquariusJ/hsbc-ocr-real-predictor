@@ -12,7 +12,7 @@ public class PredictorResponseVO {
 
     private String resultIsMatch;
 
-    private PredictorRequestVO originalData;
+    private String originalData;
 
     private String ocrResult;
 
