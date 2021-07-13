@@ -9,6 +9,8 @@ import org.springframework.util.Assert;
 @Data
 public class PredictorRequestVO {
 
+    private FileVO fileVO;
+
     private String docType;
 
     private String docSubType;
