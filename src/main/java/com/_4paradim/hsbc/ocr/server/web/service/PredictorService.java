@@ -3,9 +3,9 @@ package com._4paradim.hsbc.ocr.server.web.service;
 
 import com._4paradim.hsbc.ocr.server.common.exception.BusinessException;
 import com._4paradim.hsbc.ocr.server.common.exception.OcrException;
-import com._4paradim.hsbc.ocr.server.manager.service.BusinessLicenseService;
-import com._4paradim.hsbc.ocr.server.manager.service.IDCardService;
-import com._4paradim.hsbc.ocr.server.manager.service.VATService;
+import com._4paradim.hsbc.ocr.server.scene.service.BusinessLicenseService;
+import com._4paradim.hsbc.ocr.server.scene.service.IDCardService;
+import com._4paradim.hsbc.ocr.server.scene.service.VATService;
 import com._4paradim.hsbc.ocr.server.web.types.DocType;
 import com._4paradim.hsbc.ocr.server.web.vo.PredictorRequestVO;
 import com.google.gson.Gson;

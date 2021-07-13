@@ -1,4 +1,4 @@
-package com._4paradim.hsbc.ocr.server.manager.strategy;
+package com._4paradim.hsbc.ocr.server.scene.strategy;
 
 import com._4paradim.hsbc.ocr.server.common.exception.BusinessException;
 import com._4paradim.hsbc.ocr.server.common.exception.OcrException;
