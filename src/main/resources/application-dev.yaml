@@ -24,4 +24,5 @@ oss:
 
 
 
-
+socr:
+  baseUrl: http://localhost:8090/

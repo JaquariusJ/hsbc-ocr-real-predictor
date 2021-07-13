@@ -27,27 +27,28 @@ public class SocrStrategy implements OcrStrategy<SocrRequestVo> {
     @Override
     public String ocr(SocrRequestVo socrRequestVo) throws BusinessException, OcrException, IOException {
 
-        Call<String> reponse = socrService.ocr(socrRequestVo);
+        Call<JsonObject> reponse = socrService.ocr(socrRequestVo);
 
-        Response<String> execute = reponse.execute();
+        Response<JsonObject> execute = reponse.execute();
         int code = execute.code();
         if(code != 200){
             String message = execute.message();
             throw new OcrException(message);
         }
-        String result = execute.body();
+        JsonObject result = execute.body();
 
         final Map resultMap = Maps.newHashMap();
         try {
             JsonParser jsonParser = new JsonParser();
-            JsonElement ocr_result = jsonParser.parse(result);
-            JsonArray dataArray = ocr_result.getAsJsonObject().get("data").getAsJsonObject()
+            //JsonElement ocr_result = jsonParser.parse(result);
+            JsonArray dataArray = result.get("data").getAsJsonObject()
                     .get("result").getAsJsonArray()
                     .get(0).getAsJsonObject()
                     .get("data").getAsJsonArray();
             dataArray.forEach(n -> {
                 String key = n.getAsJsonObject().get("element_name").getAsString();
-                String value = n.getAsJsonObject().get("element_value").getAsString();
+                JsonElement value_element = n.getAsJsonObject().get("element_value");
+                String value = value_element.isJsonNull() ? null : value_element.getAsString();
                 resultMap.put(key, value);
             });
         } catch (JsonSyntaxException e) {

@@ -4,6 +4,7 @@ import com._4paradim.hsbc.ocr.server.api.config.SocrConfig;
 import com._4paradim.hsbc.ocr.server.api.vo.SocrRequestVo;
 import com._4paradim.hsbc.ocr.server.common.annotation.RetrofitClient;
 import com._4paradim.hsbc.ocr.server.manager.strategy.OcrStrategy;
+import com.google.gson.JsonObject;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
@@ -12,6 +13,6 @@ import retrofit2.http.POST;
 public interface SocrService{
 
     @POST("/lab/ocr/predict/ticket")
-    Call<String> ocr(@Body SocrRequestVo socrRequestVo);
+    Call<JsonObject> ocr(@Body SocrRequestVo socrRequestVo);
 
 }

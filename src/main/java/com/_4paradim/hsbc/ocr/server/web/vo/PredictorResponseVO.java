@@ -3,6 +3,8 @@ package com._4paradim.hsbc.ocr.server.web.vo;
 
 import lombok.Data;
 
+import java.util.Map;
+
 @Data
 public class PredictorResponseVO {
 
@@ -12,9 +14,9 @@ public class PredictorResponseVO {
 
     private String resultIsMatch;
 
-    private String originalData;
+    private Map originalData;
 
-    private String ocrResult;
+    private Map ocrResult;
 
 
 }

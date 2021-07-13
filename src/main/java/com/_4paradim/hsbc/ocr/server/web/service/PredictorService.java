@@ -31,7 +31,7 @@ public class PredictorService {
     private VATService vatService;
 
     public String predictor(PredictorRequestVO requestVo) throws IOException, OcrException, BusinessException {
-        String docType = requestVo.getDocType();
+        String docType = requestVo.getPredictorRequestDataVO().getDocType();
         DocType docTypeEnum = DocType.getValueByType(docType);
         String result = "";
         switch (docTypeEnum){

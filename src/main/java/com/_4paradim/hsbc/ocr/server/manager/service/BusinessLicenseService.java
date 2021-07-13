@@ -21,10 +21,10 @@ public class BusinessLicenseService {
 
 
     public String ocr(PredictorRequestVO requestVo) throws IOException, OcrException, BusinessException {
-        String docType = requestVo.getDocType();
+        String docType = requestVo.getPredictorRequestDataVO().getDocType();
         DocType docTypeEnum = DocType.getValueByType(docType);
         SocrRequestVo socrRequestVo = new SocrRequestVo();
-        socrRequestVo.setImage(requestVo.getFileVO().getBasefile());
+        socrRequestVo.setImage(requestVo.getPredictorRequestFileVO().getBasefile());
         socrRequestVo.setScene(docTypeEnum.getScene());
         socrRequestVo.getParameters().put("vis_flag",false);
         //使用socr进行预估
