@@ -3,6 +3,7 @@ package com._4paradim.hsbc.ocr.server.manager.vo;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com._4paradim.hsbc.ocr.server.manager.vo.BaseEntity;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -16,12 +17,14 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class OcrRealPredictor extends BaseEntity {
+public class OcrResultItem extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
+
+    private Long docId;
 
     /**
      * ocr

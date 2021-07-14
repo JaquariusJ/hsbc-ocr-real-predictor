@@ -143,7 +143,7 @@ public class CodeGenerator {
         strategy.setEntitySerialVersionUID(true);
 
         // 写于父类中的公共字段
-        strategy.setInclude("ocr_real_predictor");
+        strategy.setInclude("ocr_predictor_info");
 //        strategy.setControllerMappingHyphenStyle(true);
 //        strategy.setTablePrefix(pc.getModuleName() + "_");
         mpg.setStrategy(strategy);

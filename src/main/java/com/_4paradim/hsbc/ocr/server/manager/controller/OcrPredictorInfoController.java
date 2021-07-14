@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
  * </p>
  *
  * @author wujian
- * @since 2021-07-13
+ * @since 2021-07-14
  */
 @RestController
-@RequestMapping("/manager/ocrRealPredictor")
-public class OcrRealPredictorController {
+@RequestMapping("/manager/ocrPredictorInfo")
+public class OcrPredictorInfoController {
 
 }
 

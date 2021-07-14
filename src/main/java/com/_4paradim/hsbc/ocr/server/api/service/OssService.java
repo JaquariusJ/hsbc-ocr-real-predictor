@@ -8,7 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.Date;
 
@@ -39,6 +41,23 @@ public class OssService {
             PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, objectName, file);
             ossClient.putObject(putObjectRequest);
             log.info(file.getName() + "上传oss成功");
+        } finally {
+            if (ossClient != null) {
+                ossClient.shutdown();
+            }
+        }
+    }
+
+    public void uploadFileInputStream(InputStream fileInputStream, String objectName) {
+        OSS ossClient = null;
+        try {
+            if (fileInputStream == null) {
+                log.error("文件流不存在，无法上传oss");
+                return;
+            }
+            ossClient = new OSSClientBuilder().build(endpointEcs, accessKeyId, accessKeySecret);
+            ossClient.putObject(bucketName,objectName,fileInputStream);
+            log.info(objectName + "上传oss成功");
         } finally {
             if (ossClient != null) {
                 ossClient.shutdown();

@@ -1,6 +1,6 @@
 package com._4paradim.hsbc.ocr.server.manager.mapper;
 
-import com._4paradim.hsbc.ocr.server.manager.vo.OcrRealPredictor;
+import com._4paradim.hsbc.ocr.server.manager.vo.OcrPredictorInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author wujian
- * @since 2021-07-13
+ * @since 2021-07-14
  */
-public interface OcrRealPredictorDao extends BaseMapper<OcrRealPredictor> {
+public interface OcrPredictorInfoDao extends BaseMapper<OcrPredictorInfo> {
 
 }

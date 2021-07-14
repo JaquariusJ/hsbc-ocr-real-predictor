@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Data
-public class SocrRequestVo {
+public class SocrRequest {
 
     private String scene;
 

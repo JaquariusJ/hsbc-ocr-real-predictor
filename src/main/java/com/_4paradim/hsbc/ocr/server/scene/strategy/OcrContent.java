@@ -5,17 +5,18 @@ import com._4paradim.hsbc.ocr.server.common.exception.OcrException;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
+import java.util.UUID;
 
 @Slf4j
-public class OcrContent<T> {
+public class OcrContent<T,R> {
 
-    private OcrStrategy<T> ocrStrategy;
+    private OcrStrategy<T,R> ocrStrategy;
 
-    public OcrContent(OcrStrategy<T> ocrStrategy) {
+    public OcrContent(OcrStrategy ocrStrategy) {
         this.ocrStrategy = ocrStrategy;
     }
 
-    public String ocr(T t) throws OcrException, IOException, BusinessException {
+    public R ocr(T t) throws OcrException, IOException, BusinessException {
         return ocrStrategy.ocr(t);
     }
 }

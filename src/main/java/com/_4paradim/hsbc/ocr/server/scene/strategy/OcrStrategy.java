@@ -5,7 +5,7 @@ import com._4paradim.hsbc.ocr.server.common.exception.OcrException;
 
 import java.io.IOException;
 
-public interface OcrStrategy<T> {
+public interface OcrStrategy<T,R> {
 
-    String ocr(T t) throws BusinessException, OcrException, IOException;
+    R ocr(T t) throws BusinessException, OcrException, IOException;
 }

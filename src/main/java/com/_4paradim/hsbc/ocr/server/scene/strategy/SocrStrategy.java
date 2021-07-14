@@ -1,10 +1,10 @@
 package com._4paradim.hsbc.ocr.server.scene.strategy;
 
 import com._4paradim.hsbc.ocr.server.api.service.SocrService;
-import com._4paradim.hsbc.ocr.server.api.vo.SocrRequestVo;
+import com._4paradim.hsbc.ocr.server.api.vo.SocrRequest;
 import com._4paradim.hsbc.ocr.server.common.exception.BusinessException;
 import com._4paradim.hsbc.ocr.server.common.exception.OcrException;
-import com.google.common.collect.Maps;
+import com._4paradim.hsbc.ocr.server.scene.vo.OcrResultVO;
 import com.google.gson.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,21 +13,19 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 import java.io.IOException;
-import java.util.Map;
 
 @Slf4j
 @Component
-public class SocrStrategy implements OcrStrategy<SocrRequestVo> {
+public class SocrStrategy implements OcrStrategy<SocrRequest,OcrResultVO> {
 
     @Autowired
     private SocrService socrService;
 
-    private static Gson gson = new GsonBuilder().create();
 
     @Override
-    public String ocr(SocrRequestVo socrRequestVo) throws BusinessException, OcrException, IOException {
+    public OcrResultVO ocr(SocrRequest socrRequest) throws BusinessException, OcrException, IOException {
 
-        Call<JsonObject> reponse = socrService.ocr(socrRequestVo);
+        Call<JsonObject> reponse = socrService.ocr(socrRequest);
 
         Response<JsonObject> execute = reponse.execute();
         int code = execute.code();
@@ -37,10 +35,9 @@ public class SocrStrategy implements OcrStrategy<SocrRequestVo> {
         }
         JsonObject result = execute.body();
 
-        final Map resultMap = Maps.newHashMap();
+        final OcrResultVO ocrResultVO = new OcrResultVO();
+        ocrResultVO.setOrigin_result(result.toString());
         try {
-            JsonParser jsonParser = new JsonParser();
-            //JsonElement ocr_result = jsonParser.parse(result);
             JsonArray dataArray = result.get("data").getAsJsonObject()
                     .get("result").getAsJsonArray()
                     .get(0).getAsJsonObject()
@@ -49,12 +46,12 @@ public class SocrStrategy implements OcrStrategy<SocrRequestVo> {
                 String key = n.getAsJsonObject().get("element_name").getAsString();
                 JsonElement value_element = n.getAsJsonObject().get("element_value");
                 String value = value_element.isJsonNull() ? null : value_element.getAsString();
-                resultMap.put(key, value);
+                ocrResultVO.getElement().put(key,value);
             });
         } catch (JsonSyntaxException e) {
             log.error(e.getMessage());
             throw new BusinessException(e.getMessage());
         }
-        return gson.toJson(resultMap);
+        return ocrResultVO;
     }
 }

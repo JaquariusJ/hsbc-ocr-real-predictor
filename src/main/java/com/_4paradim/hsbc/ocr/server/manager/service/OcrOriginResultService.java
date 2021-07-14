@@ -1,6 +1,6 @@
 package com._4paradim.hsbc.ocr.server.manager.service;
 
-import com._4paradim.hsbc.ocr.server.manager.vo.OcrRealPredictor;
+import com._4paradim.hsbc.ocr.server.manager.vo.OcrOriginResult;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author wujian
- * @since 2021-07-13
+ * @since 2021-07-14
  */
-public interface OcrRealPredictorService extends IService<OcrRealPredictor> {
+public interface OcrOriginResultService extends IService<OcrOriginResult> {
 
 }

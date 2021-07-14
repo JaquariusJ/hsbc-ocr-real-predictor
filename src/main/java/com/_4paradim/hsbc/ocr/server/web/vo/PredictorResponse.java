@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.Map;
 
 @Data
-public class PredictorResponseVO {
+public class PredictorResponse {
 
     private String resultCode;
 

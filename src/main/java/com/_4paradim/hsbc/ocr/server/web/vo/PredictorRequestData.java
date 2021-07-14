@@ -10,7 +10,7 @@ import java.util.Map;
 
 
 @Data
-public class PredictorRequestDataVO {
+public class PredictorRequestData {
 
     private String docType;
 
