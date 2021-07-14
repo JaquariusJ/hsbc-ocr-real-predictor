@@ -17,8 +17,8 @@ import java.util.concurrent.TimeUnit;
 public class ThreadPoolConfig {
 
 
-    @Bean("MythreadPoolExecutor")
-    public ExecutorService MythreadPoolExecutor(){
+    @Bean("threadPoolExecutor")
+    public ExecutorService threadPoolExecutor(){
         ThreadFactory threadPoolFactory = new ThreadFactoryBuilder().setNameFormat("threadPoolFactory").build();
         //使用tomcat中的线程池，基于jdk里的线程池做了优化
         ThreadPoolExecutor threadPool = new ThreadPoolExecutor(

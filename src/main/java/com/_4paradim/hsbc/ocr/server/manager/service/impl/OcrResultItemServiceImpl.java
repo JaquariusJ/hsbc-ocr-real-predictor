@@ -33,7 +33,7 @@ public class OcrResultItemServiceImpl extends ServiceImpl<OcrResultItemDao, OcrR
             ocrResultItem.setOcrName(k);
             ocrResultItem.setOcrValue(v == null?"":String.valueOf(v));
             ocrResultItem.setOcrTexts(ocrResult.getTexts().get(index.get()));
-            ocrResultItem.setOcrTexts(ocrResult.getBoxes().get(index.get()));
+            ocrResultItem.setOcrBoxes(ocrResult.getBoxes().get(index.get()));
             list.add(ocrResultItem);
             index.getAndIncrement();
         });

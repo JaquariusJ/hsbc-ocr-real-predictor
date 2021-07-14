@@ -48,6 +48,22 @@ public class SocrStrategy implements OcrStrategy<SocrRequest,OcrResultVO> {
                 String value = value_element.isJsonNull() ? null : value_element.getAsString();
                 ocrResultVO.getElement().put(key,value);
             });
+
+            JsonArray textsArray = result.get("data").getAsJsonObject()
+                    .get("json").getAsJsonObject()
+                    .get("raw_result").getAsJsonObject()
+                    .get("texts").getAsJsonArray();
+            textsArray.forEach( n -> {
+                ocrResultVO.getTexts().add(n.getAsJsonArray().toString());
+            });
+
+            JsonArray boxesArray = result.get("data").getAsJsonObject()
+                    .get("json").getAsJsonObject()
+                    .get("raw_result").getAsJsonObject()
+                    .get("boxes").getAsJsonArray();
+            boxesArray.forEach( n -> {
+                ocrResultVO.getBoxes().add(n.getAsJsonArray().toString());
+            });
         } catch (JsonSyntaxException e) {
             log.error(e.getMessage());
             throw new BusinessException(e.getMessage());

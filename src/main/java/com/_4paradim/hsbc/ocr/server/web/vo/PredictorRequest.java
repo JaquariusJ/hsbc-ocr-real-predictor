@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Data
 public class PredictorRequest {
 
-    private MultipartFile fileVO;
+    private PredictorRequestFile fileVO;
 
     private PredictorRequestData predictorRequestData;
 }

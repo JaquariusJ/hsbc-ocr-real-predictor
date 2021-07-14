@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,11 +36,12 @@ public class AsyncTask {
     private OcrPredictorInfoService ocrPredictorInfoService;
 
 
-    @Async("MythreadPoolExecutor")
+    @Async("threadPoolExecutor")
+    @Transactional
     public void uploadOssAndSaveData(PredictorRequest requestVO, OcrResultVO ocrResultVO) throws IOException {
         String filename = requestVO.getFileVO().getOriginalFilename();
         String osspath = filename;
-        InputStream inputStream = requestVO.getFileVO().getInputStream();
+        //InputStream inputStream = requestVO.getFileVO().getInputStream();
         log.info("upload to oss,file: "+filename+"  >>>  "+osspath);
         //ossService.uploadFileInputStream(inputStream,osspath);
         //保存请求的数据
@@ -50,8 +52,10 @@ public class AsyncTask {
         OcrOriginResult ocrOriginResult = new OcrOriginResult();
         ocrOriginResult.setId(ocrPredictorInfo.getId());
         ocrOriginResult.setOcrResult(ocrResultVO.getOrigin_result());
+        ocrOriginResultService.saveOrUpdate(ocrOriginResult);
         //保存ocritem的数据
         List<OcrResultItem> ocrResultItems = ocrResultItemService.request2OcrResultItems(ocrResultVO);
+        ocrResultItems.stream().forEach(n->n.setDocId(ocrPredictorInfo.getId()));
         ocrResultItemService.saveOrUpdateBatch(ocrResultItems);
     }
 

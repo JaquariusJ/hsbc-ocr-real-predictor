@@ -1,6 +1,8 @@
 package com._4paradim.hsbc.ocr.server.web.vo;
 
 import lombok.Data;
+import org.springframework.core.io.Resource;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -9,10 +11,18 @@ import java.io.InputStream;
 public class PredictorRequestFile {
 
 
-    private String filename;
+    private String name;
 
-    private Long filesize;
+    private String originalFilename;
 
-    private String basefile;
+    private Long size;
+
+    private byte[] bytes;
+
+    private InputStream inputStream;
+
+    private String contentType;
+
+    private Resource resource;
 
 }

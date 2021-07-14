@@ -5,6 +5,7 @@ import com._4paradim.hsbc.ocr.server.manager.mapper.OcrPredictorInfoDao;
 import com._4paradim.hsbc.ocr.server.manager.service.OcrPredictorInfoService;
 import com._4paradim.hsbc.ocr.server.web.vo.PredictorRequest;
 import com._4paradim.hsbc.ocr.server.web.vo.PredictorRequestData;
+import com._4paradim.hsbc.ocr.server.web.vo.PredictorRequestFile;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -27,7 +28,7 @@ public class OcrPredictorInfoServiceImpl extends ServiceImpl<OcrPredictorInfoDao
     @Override
     public OcrPredictorInfo request2PredictorInfo(PredictorRequest predictorRequest) {
         PredictorRequestData dataVO = predictorRequest.getPredictorRequestData();
-        MultipartFile fileVO = predictorRequest.getFileVO();
+        PredictorRequestFile fileVO = predictorRequest.getFileVO();
         OcrPredictorInfo ocrPredictorInfo = new OcrPredictorInfo();
         ocrPredictorInfo.setDocType(dataVO.getDocType());
         ocrPredictorInfo.setSubType(dataVO.getDocSubType());
