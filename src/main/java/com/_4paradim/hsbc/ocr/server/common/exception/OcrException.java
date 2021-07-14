@@ -5,7 +5,7 @@ import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class OcrException extends Exception {
+public class OcrException extends RuntimeException {
 
     private String message;
 }
