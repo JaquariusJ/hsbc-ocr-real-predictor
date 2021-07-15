@@ -4,6 +4,7 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.apache.tomcat.util.threads.ThreadPoolExecutor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 import java.util.concurrent.ArrayBlockingQueue;
@@ -26,7 +27,7 @@ public class ThreadPoolConfig {
                 60L, TimeUnit.SECONDS,
                 new ArrayBlockingQueue<>(100),
                 threadPoolFactory,
-                new ThreadPoolExecutor.AbortPolicy());
+                new ThreadPoolExecutor.CallerRunsPolicy());
         return threadPool;
     }
 }

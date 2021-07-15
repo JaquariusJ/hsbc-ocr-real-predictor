@@ -1,8 +1,10 @@
 package com._4paradim.hsbc.ocr.server.web.controller;
 
 
+import com._4paradim.hsbc.ocr.server.common.annotation.TaskTime;
 import com._4paradim.hsbc.ocr.server.common.exception.BusinessException;
 import com._4paradim.hsbc.ocr.server.common.exception.OcrException;
+import com._4paradim.hsbc.ocr.server.common.utils.ParamValidationUtils;
 import com._4paradim.hsbc.ocr.server.scene.vo.OcrResultVO;
 import com._4paradim.hsbc.ocr.server.web.service.PredictorService;
 import com._4paradim.hsbc.ocr.server.web.utils.PredictorReponseResult;
@@ -36,8 +38,10 @@ public class PredictorController {
     private static final Gson gson = new GsonBuilder().serializeNulls().create();
 
     @PostMapping("/predictor")
+    @TaskTime(name = "interface")
     public PredictorResponse predictor(@RequestParam("file") MultipartFile file, @RequestParam("data") String request, @RequestParam("appCode") String appCode) throws BusinessException, OcrException, IOException {
         PredictorRequestData dataVO = gson.fromJson(request, PredictorRequestData.class);
+        ParamValidationUtils.validate(dataVO);
         PredictorRequestFile fileVO = new PredictorRequestFile();
         fileVO.setBytes(file.getBytes());
         fileVO.setContentType(file.getContentType());

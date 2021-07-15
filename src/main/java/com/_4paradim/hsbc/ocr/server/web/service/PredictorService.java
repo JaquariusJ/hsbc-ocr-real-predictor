@@ -4,18 +4,18 @@ package com._4paradim.hsbc.ocr.server.web.service;
 import com._4paradim.hsbc.ocr.server.common.exception.BusinessException;
 import com._4paradim.hsbc.ocr.server.common.exception.OcrException;
 import com._4paradim.hsbc.ocr.server.manager.task.AsyncTask;
-import com._4paradim.hsbc.ocr.server.scene.service.BusinessLicenseService;
-import com._4paradim.hsbc.ocr.server.scene.service.IDCardService;
-import com._4paradim.hsbc.ocr.server.scene.service.VATService;
+import com._4paradim.hsbc.ocr.server.scene.service.Impl.BusinessLicenseService;
+import com._4paradim.hsbc.ocr.server.scene.service.Impl.IDCardService;
+import com._4paradim.hsbc.ocr.server.scene.service.Impl.VATService;
 import com._4paradim.hsbc.ocr.server.scene.vo.OcrResultVO;
 import com._4paradim.hsbc.ocr.server.web.types.DocType;
 import com._4paradim.hsbc.ocr.server.web.vo.PredictorRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 @Slf4j
 @Service
@@ -54,8 +54,6 @@ public class PredictorService {
         //异步发送请求，oss文档，保存数据
         asyncTask.uploadOssAndSaveData(requestVo,resultVo);
         return resultVo;
-
-
 
     }
 

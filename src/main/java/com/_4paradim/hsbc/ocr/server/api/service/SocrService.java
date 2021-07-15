@@ -11,6 +11,7 @@ import retrofit2.http.POST;
 @RetrofitClient(config = SocrConfig.class)
 public interface SocrService{
 
+
     @POST("/lab/ocr/predict/ticket")
     Call<JsonObject> ocr(@Body SocrRequest socrRequest);
 

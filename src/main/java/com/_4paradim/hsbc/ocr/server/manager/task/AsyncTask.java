@@ -1,6 +1,7 @@
 package com._4paradim.hsbc.ocr.server.manager.task;
 
 import com._4paradim.hsbc.ocr.server.api.service.OssService;
+import com._4paradim.hsbc.ocr.server.common.annotation.TaskTime;
 import com._4paradim.hsbc.ocr.server.manager.service.OcrOriginResultService;
 import com._4paradim.hsbc.ocr.server.manager.service.OcrPredictorInfoService;
 import com._4paradim.hsbc.ocr.server.manager.service.OcrResultItemService;
@@ -38,10 +39,11 @@ public class AsyncTask {
 
     @Async("threadPoolExecutor")
     @Transactional
+    @TaskTime(name = "other")
     public void uploadOssAndSaveData(PredictorRequest requestVO, OcrResultVO ocrResultVO) throws IOException {
         String filename = requestVO.getFileVO().getOriginalFilename();
         String osspath = filename;
-        //InputStream inputStream = requestVO.getFileVO().getInputStream();
+        InputStream inputStream = requestVO.getFileVO().getInputStream();
         log.info("upload to oss,file: "+filename+"  >>>  "+osspath);
         //ossService.uploadFileInputStream(inputStream,osspath);
         //保存请求的数据
@@ -59,5 +61,9 @@ public class AsyncTask {
         ocrResultItemService.saveOrUpdateBatch(ocrResultItems);
     }
 
+    @Transactional
+    public void saveRunTime(){
+
+    }
 
 }

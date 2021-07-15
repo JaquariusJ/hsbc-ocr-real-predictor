@@ -1,7 +1,7 @@
 package com._4paradim.hsbc.ocr.server.scene.service;
 
-
 import com._4paradim.hsbc.ocr.server.api.vo.SocrRequest;
+import com._4paradim.hsbc.ocr.server.common.annotation.TaskTime;
 import com._4paradim.hsbc.ocr.server.common.exception.BusinessException;
 import com._4paradim.hsbc.ocr.server.common.exception.OcrException;
 import com._4paradim.hsbc.ocr.server.scene.strategy.OcrContent;
@@ -15,13 +15,16 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
+/**
+ * socr场景预估类
+ */
 @Service
-public class BusinessLicenseService {
+public class SceneSocrService implements SceneService<OcrResultVO, PredictorRequest> {
 
     @Autowired
     private SocrStrategy socrStrategy;
 
-
+    @Override
     public OcrResultVO ocr(PredictorRequest requestVo) throws IOException, OcrException, BusinessException {
         String docType = requestVo.getPredictorRequestData().getDocType();
         String basefile = Base64.encodeBase64String(requestVo.getFileVO().getBytes());
