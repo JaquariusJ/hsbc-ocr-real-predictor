@@ -19,19 +19,4 @@ public class PredictorRequestData {
 
     @NotBlank(message = "docSubType 不能为空")
     private String docSubType;
-
-    private Map idCardFrontData;
-
-    private Map idCardBackData;
-
-    private Map businessLicenseData;
-
-    private Map vatData;
-
-    public void check(){
-        Assert.isInstanceOf(DocType.class,DocType.getValueByType(docType),"[doctype] wrongful");
-        if(DocType.getValueByType(docType) == DocType.IDCard){
-            Assert.notNull(docSubType,"[docSubType must not be null]");
-        }
-    }
 }

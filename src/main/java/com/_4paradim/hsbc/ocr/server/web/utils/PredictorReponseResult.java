@@ -11,30 +11,30 @@ public class PredictorReponseResult {
 
     private static final Gson gson = new Gson();
 
-    public static PredictorResponse success(String request, OcrResultVO result){
+    public static PredictorResponse success(OcrResultVO result){
         PredictorResponse responseVO = new PredictorResponse();
-        responseVO.setErrorMsg(null);
-        responseVO.setResultCode(ResponseType.SUCCESS.getMessage());
-        responseVO.setOcrResult(result.getElement());
-        responseVO.setOriginalData(gson.fromJson(request, Map.class));
+        responseVO.setCode(String.valueOf(ResponseType.SUCCESS.getCode()));
+        responseVO.getData().setOcrResult(result.getElement());
+        responseVO.getData().setErrorMsg(null);
+        responseVO.getData().setResultCode(ResponseType.SUCCESS.getMessage());
         return responseVO;
     }
 
-    public static PredictorResponse failed(String request, ResponseType responseType){
+    public static PredictorResponse failed(ResponseType responseType){
         PredictorResponse responseVO = new PredictorResponse();
-        responseVO.setErrorMsg(responseType.getDesc());
-        responseVO.setResultCode(responseType.getMessage());
-        responseVO.setOcrResult(null);
-        responseVO.setOriginalData(gson.fromJson(request, Map.class));
+        responseVO.setCode(String.valueOf(responseType.getCode()));
+        responseVO.getData().setOcrResult(null);
+        responseVO.getData().setErrorMsg(responseType.getDesc());
+        responseVO.getData().setResultCode(responseType.getMessage());
         return responseVO;
     }
 
-    public static PredictorResponse failed(String request, ResponseType responseType, String e){
+    public static PredictorResponse failed(ResponseType responseType, String e){
         PredictorResponse responseVO = new PredictorResponse();
-        responseVO.setErrorMsg(e);
-        responseVO.setResultCode(responseType.getMessage());
-        responseVO.setOcrResult(null);
-        responseVO.setOriginalData(gson.fromJson(request, Map.class));
+        responseVO.setCode(String.valueOf(responseType.getCode()));
+        responseVO.getData().setOcrResult(null);
+        responseVO.getData().setErrorMsg(e);
+        responseVO.getData().setResultCode(responseType.getMessage());
         return responseVO;
     }
 }

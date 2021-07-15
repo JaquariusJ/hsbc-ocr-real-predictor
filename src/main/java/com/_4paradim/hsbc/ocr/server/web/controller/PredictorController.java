@@ -13,6 +13,7 @@ import com._4paradim.hsbc.ocr.server.web.vo.PredictorResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,7 +51,7 @@ public class PredictorController {
         requestVO.setPredictorRequestData(dataVO);
         requestVO.setFileVO(fileVO);
         OcrResultVO result = predictorService.predictor(requestVO);
-        return PredictorReponseResult.success(request, result);
+        return PredictorReponseResult.success(result);
     }
 
 

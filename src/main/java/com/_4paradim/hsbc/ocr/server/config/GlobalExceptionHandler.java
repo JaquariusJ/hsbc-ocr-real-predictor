@@ -16,15 +16,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(OcrException.class)
     public PredictorResponse ocrException(HttpServletRequest request, Exception e){
-        String data = request.getParameter("data");
         e.printStackTrace();
-        return PredictorReponseResult.failed(data, ResponseType.PLATFROM_ERROR,e.getMessage());
+        return PredictorReponseResult.failed(ResponseType.PLATFROM_ERROR,e.getMessage());
     }
 
     @ExceptionHandler(Exception.class)
     public PredictorResponse Exception(HttpServletRequest request, Exception e){
-        String data = request.getParameter("data");
         e.printStackTrace();
-        return PredictorReponseResult.failed(data, ResponseType.SERVER_ERRROR,e.getMessage());
+        return PredictorReponseResult.failed(ResponseType.SERVER_ERRROR,e.getMessage());
     }
 }
