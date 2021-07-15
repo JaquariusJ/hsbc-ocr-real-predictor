@@ -45,7 +45,7 @@ public class RetrofitCluster  {
             RetrofitClient annotation = svcClass.getAnnotation(RetrofitClient.class);
             Class configClass = annotation.config();
             RetrofitConfig retrofitConfig = (RetrofitConfig) beanFactory.getBean(configClass);
-            //对配置进行检查
+            //获取配置类，对配置项进行检查
             checkConfig(retrofitConfig);
             //创建service
             Object svc = createService(svcClass, retrofitConfig);
