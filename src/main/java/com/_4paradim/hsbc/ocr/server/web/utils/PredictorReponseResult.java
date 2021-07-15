@@ -9,8 +9,6 @@ import java.util.Map;
 
 public class PredictorReponseResult {
 
-    private static final Gson gson = new Gson();
-
     public static PredictorResponse success(OcrResultVO result){
         PredictorResponse responseVO = new PredictorResponse();
         responseVO.setCode(String.valueOf(ResponseType.SUCCESS.getCode()));
