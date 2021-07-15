@@ -2,6 +2,7 @@ package com._4paradim.hsbc.ocr.server.scene.strategy;
 
 import com._4paradim.hsbc.ocr.server.api.service.SocrService;
 import com._4paradim.hsbc.ocr.server.api.vo.SocrRequest;
+import com._4paradim.hsbc.ocr.server.common.annotation.TaskTime;
 import com._4paradim.hsbc.ocr.server.common.exception.BusinessException;
 import com._4paradim.hsbc.ocr.server.common.exception.OcrException;
 import com._4paradim.hsbc.ocr.server.scene.vo.OcrResultVO;
@@ -23,6 +24,7 @@ public class SocrStrategy implements OcrStrategy<SocrRequest,OcrResultVO> {
 
 
     @Override
+    @TaskTime(name = "ocr")
     public OcrResultVO ocr(SocrRequest socrRequest) throws BusinessException, OcrException, IOException {
 
         Call<JsonObject> reponse = socrService.ocr(socrRequest);

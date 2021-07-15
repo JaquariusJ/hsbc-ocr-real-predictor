@@ -54,3 +54,20 @@ CREATE TABLE `ocr_origin_result` (
   `version` bigint(20) DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+
+/**
+    ocr预估的运行信息
+ */
+CREATE TABLE `ocr_predictor_runtime` (
+  `id` bigint(20) NOT NULL,
+  `ocr_time` timestamp COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'ocr time',
+  `other_time` timestamp COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'ocr time',
+  `total_time` timestamp COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'ocr time',
+  `create_time` datetime DEFAULT NULL,
+  `create_user` varchar(45) COLLATE utf8mb4_bin DEFAULT NULL,
+  `last_modified_time` datetime DEFAULT NULL,
+  `last_modified_user` varchar(45) COLLATE utf8mb4_bin DEFAULT NULL,
+  `version` bigint(20) DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
