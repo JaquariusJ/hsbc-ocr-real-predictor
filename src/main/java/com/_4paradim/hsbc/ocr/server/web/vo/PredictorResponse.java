@@ -9,7 +9,7 @@ public class PredictorResponse {
 
     private String code;
 
-    private PredictorResponseData data;
+    private PredictorResponseData data = new PredictorResponseData();
 
 
 }

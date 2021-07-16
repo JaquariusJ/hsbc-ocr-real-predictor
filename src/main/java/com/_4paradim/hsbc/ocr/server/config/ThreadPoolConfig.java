@@ -1,5 +1,6 @@
 package com._4paradim.hsbc.ocr.server.config;
 
+import com.alibaba.ttl.threadpool.TtlExecutors;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.apache.tomcat.util.threads.ThreadPoolExecutor;
 import org.springframework.context.annotation.Bean;
@@ -18,9 +19,10 @@ import java.util.concurrent.TimeUnit;
 public class ThreadPoolConfig {
 
 
+
     @Bean("threadPoolExecutor")
     public ExecutorService threadPoolExecutor(){
-        ThreadFactory threadPoolFactory = new ThreadFactoryBuilder().setNameFormat("threadPoolFactory").build();
+        ThreadFactory threadPoolFactory = new ThreadFactoryBuilder().setNameFormat("async-thread-").build();
         //使用tomcat中的线程池，基于jdk里的线程池做了优化
         ThreadPoolExecutor threadPool = new ThreadPoolExecutor(
                 10,16,
@@ -28,6 +30,7 @@ public class ThreadPoolConfig {
                 new ArrayBlockingQueue<>(100),
                 threadPoolFactory,
                 new ThreadPoolExecutor.CallerRunsPolicy());
-        return threadPool;
+        //使用包装后的线程池，后续为线程池与主线程通信做准备
+        return TtlExecutors.getTtlExecutorService(threadPool);
     }
 }

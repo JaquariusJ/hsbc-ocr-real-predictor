@@ -1,5 +1,7 @@
 package com._4paradim.hsbc.ocr.server.common.annotation;
 
+import com._4paradim.hsbc.ocr.server.common.enums.TimeType;
+
 import java.lang.annotation.*;
 
 
@@ -10,6 +12,6 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface TaskTime {
 
-    String name() default "";
+    TimeType type() default TimeType.OTHER_TIME;
 
 }

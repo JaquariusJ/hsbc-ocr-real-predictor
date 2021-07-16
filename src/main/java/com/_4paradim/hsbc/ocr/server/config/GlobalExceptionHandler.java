@@ -12,22 +12,31 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 
 @Slf4j
-@ControllerAdvice
 @ResponseBody
+@ControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(OcrException.class)
     public PredictorResponse ocrException(HttpServletRequest request, Exception e){
-        return PredictorReponseResult.failed(ResponseType.PLATFROM_ERROR,e.getMessage());
+        String requestId = (String) request.getAttribute("requestId");
+        log.error("id: "+requestId+",error info: "+e);
+        e.printStackTrace();
+        return PredictorReponseResult.failed(requestId,ResponseType.PLATFROM_ERROR,e.getMessage());
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public PredictorResponse IllegalArgumentException(HttpServletRequest request, IllegalArgumentException e){
-        return PredictorReponseResult.failed(ResponseType.BAD_REQUEST,e.getMessage());
+    public PredictorResponse IllegalArgumentException(HttpServletRequest request, Exception e){
+        String requestId = (String) request.getAttribute("requestId");
+        log.error("id: "+requestId+",error info: "+e);
+        e.printStackTrace();
+        return PredictorReponseResult.failed(requestId,ResponseType.BAD_REQUEST,e.getMessage());
     }
 
     @ExceptionHandler(Exception.class)
     public PredictorResponse Exception(HttpServletRequest request, Exception e){
-        return PredictorReponseResult.failed(ResponseType.SERVER_ERRROR,e.getMessage());
+        String requestId = (String) request.getAttribute("requestId");
+        log.error("id: "+requestId+",error info: "+e);
+        e.printStackTrace();
+        return PredictorReponseResult.failed(requestId,ResponseType.SERVER_ERRROR,e.getMessage());
     }
 }

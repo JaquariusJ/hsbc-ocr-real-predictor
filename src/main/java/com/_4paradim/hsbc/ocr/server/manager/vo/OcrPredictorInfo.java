@@ -20,8 +20,7 @@ public class OcrPredictorInfo extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id;
+    private String id;
 
     /**
      * doc_type
@@ -47,6 +46,11 @@ public class OcrPredictorInfo extends BaseEntity {
      * file_name
      */
     private String fileName;
+
+    /**
+     * file_md5
+     */
+    private String fileMd5;
 
     /**
      * doc_data

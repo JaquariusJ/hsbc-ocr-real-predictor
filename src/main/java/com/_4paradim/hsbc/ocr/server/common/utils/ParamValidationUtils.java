@@ -8,7 +8,7 @@ import javax.validation.Validation;
 import java.util.Set;
 
 public class ParamValidationUtils {
-    public static void validate(@Valid Object user) {
+    public static void validate(@Valid Object user) throws IllegalArgumentException{
         Set<ConstraintViolation<@Valid Object>> validateSet = Validation.buildDefaultValidatorFactory()
                 .getValidator()
                 .validate(user, new Class[0]);

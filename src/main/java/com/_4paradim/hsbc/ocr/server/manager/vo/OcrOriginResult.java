@@ -20,7 +20,7 @@ public class OcrOriginResult extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    private Long id;
+    private String id;
 
     /**
      * ocr_result

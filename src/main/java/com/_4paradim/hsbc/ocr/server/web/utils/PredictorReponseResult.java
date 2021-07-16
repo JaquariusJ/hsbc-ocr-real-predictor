@@ -9,29 +9,32 @@ import java.util.Map;
 
 public class PredictorReponseResult {
 
-    public static PredictorResponse success(OcrResultVO result){
+    public static PredictorResponse success(String requestId,OcrResultVO result){
         PredictorResponse responseVO = new PredictorResponse();
         responseVO.setCode(String.valueOf(ResponseType.SUCCESS.getCode()));
         responseVO.getData().setOcrResult(result.getElement());
+        responseVO.getData().setRequestId(requestId);
         responseVO.getData().setErrorMsg(null);
         responseVO.getData().setResultCode(ResponseType.SUCCESS.getMessage());
         return responseVO;
     }
 
-    public static PredictorResponse failed(ResponseType responseType){
+    public static PredictorResponse failed(String requestId,ResponseType responseType){
         PredictorResponse responseVO = new PredictorResponse();
         responseVO.setCode(String.valueOf(responseType.getCode()));
         responseVO.getData().setOcrResult(null);
         responseVO.getData().setErrorMsg(responseType.getDesc());
+        responseVO.getData().setRequestId(requestId);
         responseVO.getData().setResultCode(responseType.getMessage());
         return responseVO;
     }
 
-    public static PredictorResponse failed(ResponseType responseType, String e){
+    public static PredictorResponse failed(String requestId,ResponseType responseType, String e){
         PredictorResponse responseVO = new PredictorResponse();
         responseVO.setCode(String.valueOf(responseType.getCode()));
         responseVO.getData().setOcrResult(null);
         responseVO.getData().setErrorMsg(e);
+        responseVO.getData().setRequestId(requestId);
         responseVO.getData().setResultCode(responseType.getMessage());
         return responseVO;
     }

@@ -11,4 +11,7 @@ public class PredictorRequest {
     private PredictorRequestFile fileVO;
 
     private PredictorRequestData predictorRequestData;
+
+    private String requestId;
+
 }

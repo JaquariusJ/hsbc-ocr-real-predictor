@@ -1,7 +1,9 @@
 package com._4paradim.hsbc.ocr.server.web.controller;
 
 
+import cn.hutool.core.util.IdUtil;
 import com._4paradim.hsbc.ocr.server.common.annotation.TaskTime;
+import com._4paradim.hsbc.ocr.server.common.enums.TimeType;
 import com._4paradim.hsbc.ocr.server.common.exception.BusinessException;
 import com._4paradim.hsbc.ocr.server.common.exception.OcrException;
 import com._4paradim.hsbc.ocr.server.common.utils.ParamValidationUtils;
@@ -15,7 +17,6 @@ import com._4paradim.hsbc.ocr.server.web.vo.PredictorResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,9 +24,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
-import javax.validation.Valid;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -39,9 +42,13 @@ public class PredictorController {
     private static final Gson gson = new GsonBuilder().serializeNulls().create();
 
     @PostMapping("/predictor")
-    @TaskTime(name = "interface")
-    public PredictorResponse predictor(@RequestParam("file") MultipartFile file, @RequestParam("data") String request, @RequestParam("appCode") String appCode) throws BusinessException, OcrException, IOException {
-        PredictorRequestData dataVO = gson.fromJson(request, PredictorRequestData.class);
+    @TaskTime(type = TimeType.INTERFACE_TIME)
+    public PredictorResponse predictor(@RequestParam("file") MultipartFile file, @RequestParam("data") String data, HttpServletRequest request) throws IOException {
+        PredictorRequest requestVO = new PredictorRequest();
+        String uuid = IdUtil.simpleUUID();
+        request.setAttribute("requestId",uuid);
+        requestVO.setRequestId(uuid);
+        PredictorRequestData dataVO = gson.fromJson(data, PredictorRequestData.class);
         ParamValidationUtils.validate(dataVO);
         PredictorRequestFile fileVO = new PredictorRequestFile();
         fileVO.setBytes(file.getBytes());
@@ -51,11 +58,12 @@ public class PredictorController {
         fileVO.setOriginalFilename(file.getOriginalFilename());
         fileVO.setSize(file.getSize());
         fileVO.setResource(file.getResource());
-        PredictorRequest requestVO = new PredictorRequest();
         requestVO.setPredictorRequestData(dataVO);
         requestVO.setFileVO(fileVO);
+
         OcrResultVO result = predictorService.predictor(requestVO);
-        return PredictorReponseResult.success(result);
+
+        return PredictorReponseResult.success(requestVO.getRequestId(),result);
     }
 
 

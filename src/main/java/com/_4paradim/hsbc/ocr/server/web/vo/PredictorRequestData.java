@@ -13,4 +13,7 @@ public class PredictorRequestData {
 
     @NotBlank(message = "docSubType 不能为空")
     private String docSubType;
+
+
+
 }
