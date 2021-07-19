@@ -2,12 +2,15 @@ package com._4paradim.hsbc.ocr.server.scene.strategy;
 
 import com._4paradim.hsbc.ocr.server.api.service.SocrService;
 import com._4paradim.hsbc.ocr.server.api.vo.SocrRequest;
-import com._4paradim.hsbc.ocr.server.common.annotation.TaskTime;
-import com._4paradim.hsbc.ocr.server.common.enums.TimeType;
+import com._4paradim.hsbc.ocr.server.time.annotation.TaskTime;
+import com._4paradim.hsbc.ocr.server.time.enums.TimeType;
 import com._4paradim.hsbc.ocr.server.common.exception.BusinessException;
 import com._4paradim.hsbc.ocr.server.common.exception.OcrException;
 import com._4paradim.hsbc.ocr.server.scene.vo.OcrResultVO;
-import com.google.gson.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

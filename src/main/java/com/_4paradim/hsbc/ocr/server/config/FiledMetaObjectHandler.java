@@ -19,8 +19,9 @@ public class FiledMetaObjectHandler implements MetaObjectHandler {
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        this.setFieldValByName("lastModifiedTime", LocalTime.now(),metaObject);
+        this.setFieldValByName("lastModifiedTime", LocalDateTime.now(),metaObject);
         this.setFieldValByName("lastModifiedUser","system",metaObject);
+
     }
 
 }

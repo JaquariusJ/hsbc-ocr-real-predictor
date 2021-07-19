@@ -1,9 +1,10 @@
 package com._4paradim.hsbc.ocr.server.web.service;
 
 
+import com._4paradim.hsbc.ocr.server.time.enums.TimeType;
 import com._4paradim.hsbc.ocr.server.common.exception.BusinessException;
 import com._4paradim.hsbc.ocr.server.common.exception.OcrException;
-import com._4paradim.hsbc.ocr.server.common.utils.TaskTimeAspect;
+import com._4paradim.hsbc.ocr.server.time.handler.TaskTimeAspect;
 import com._4paradim.hsbc.ocr.server.manager.service.OcrPredictorInfoService;
 import com._4paradim.hsbc.ocr.server.manager.task.AsyncTask;
 import com._4paradim.hsbc.ocr.server.manager.vo.OcrPredictorInfo;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.UUID;
 
 @Slf4j
@@ -38,7 +40,7 @@ public class PredictorService {
     private AsyncTask asyncTask;
 
 
-    public OcrResultVO predictor(PredictorRequest requestVo) throws IOException, OcrException, BusinessException {
+    public OcrResultVO predictor(PredictorRequest requestVo) throws Exception {
         String docType = requestVo.getPredictorRequestData().getDocType();
         DocType docTypeEnum = DocType.getValueByType(docType);
         OcrResultVO resultVo = null;

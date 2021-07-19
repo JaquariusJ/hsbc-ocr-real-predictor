@@ -62,9 +62,12 @@ CREATE TABLE `ocr_origin_result` (
  */
 CREATE TABLE `ocr_predictor_runtime` (
   `id` varchar(100) NOT NULL,
-  `ocr_time` timestamp COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'ocr time',
-  `other_time` timestamp COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'ocr time',
-  `total_time` timestamp COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'ocr time',
+  `doc_id` varchar(100) NOT NULL,
+  `time_type` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'time_type',
+  `class_name` varchar(1000) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'class_name',
+  `method_name` varchar(1000) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'method_name',
+  `message` varchar(1000) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'message',
+  `millisecond` bigint(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'millisecond',
   `create_time` datetime DEFAULT NULL,
   `create_user` varchar(45) COLLATE utf8mb4_bin DEFAULT NULL,
   `last_modified_time` datetime DEFAULT NULL,

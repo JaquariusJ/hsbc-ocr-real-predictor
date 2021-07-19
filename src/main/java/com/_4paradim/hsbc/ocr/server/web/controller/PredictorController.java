@@ -2,8 +2,8 @@ package com._4paradim.hsbc.ocr.server.web.controller;
 
 
 import cn.hutool.core.util.IdUtil;
-import com._4paradim.hsbc.ocr.server.common.annotation.TaskTime;
-import com._4paradim.hsbc.ocr.server.common.enums.TimeType;
+import com._4paradim.hsbc.ocr.server.time.annotation.TaskTime;
+import com._4paradim.hsbc.ocr.server.time.enums.TimeType;
 import com._4paradim.hsbc.ocr.server.common.exception.BusinessException;
 import com._4paradim.hsbc.ocr.server.common.exception.OcrException;
 import com._4paradim.hsbc.ocr.server.common.utils.ParamValidationUtils;
@@ -43,7 +43,7 @@ public class PredictorController {
 
     @PostMapping("/predictor")
     @TaskTime(type = TimeType.INTERFACE_TIME)
-    public PredictorResponse predictor(@RequestParam("file") MultipartFile file, @RequestParam("data") String data, HttpServletRequest request) throws IOException {
+    public PredictorResponse predictor(@RequestParam("file") MultipartFile file, @RequestParam("data") String data, HttpServletRequest request) throws Exception {
         PredictorRequest requestVO = new PredictorRequest();
         String uuid = IdUtil.simpleUUID();
         request.setAttribute("requestId",uuid);

@@ -1,7 +1,6 @@
 package com._4paradim.hsbc.ocr.server.scene.service;
 
 import com._4paradim.hsbc.ocr.server.api.vo.SocrRequest;
-import com._4paradim.hsbc.ocr.server.common.annotation.TaskTime;
 import com._4paradim.hsbc.ocr.server.common.exception.BusinessException;
 import com._4paradim.hsbc.ocr.server.common.exception.OcrException;
 import com._4paradim.hsbc.ocr.server.scene.strategy.OcrContent;

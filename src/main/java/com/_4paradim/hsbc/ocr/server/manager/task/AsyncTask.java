@@ -1,8 +1,8 @@
 package com._4paradim.hsbc.ocr.server.manager.task;
 
 import com._4paradim.hsbc.ocr.server.api.service.OssService;
-import com._4paradim.hsbc.ocr.server.common.annotation.TaskTime;
-import com._4paradim.hsbc.ocr.server.common.enums.TimeType;
+import com._4paradim.hsbc.ocr.server.time.annotation.TaskTime;
+import com._4paradim.hsbc.ocr.server.time.enums.TimeType;
 import com._4paradim.hsbc.ocr.server.manager.service.OcrOriginResultService;
 import com._4paradim.hsbc.ocr.server.manager.service.OcrPredictorInfoService;
 import com._4paradim.hsbc.ocr.server.manager.service.OcrResultItemService;
@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 
 @Component
 @Slf4j
@@ -40,10 +41,9 @@ public class AsyncTask {
     private OcrPredictorInfoService ocrPredictorInfoService;
 
 
-
     @Async("threadPoolExecutor")
     @Transactional
-    @TaskTime(type = TimeType.ASYNC_TIME)
+    @TaskTime(type = TimeType.ASYNC_TIME,callback = RunTimeCallBack.class,desc = "upload oss,save save request and result data,")
     public void uploadOssAndSaveData(PredictorRequest requestVO, OcrResultVO ocrResultVO) throws IOException {
         String filename = requestVO.getFileVO().getOriginalFilename();
         String osspath = filename;
@@ -67,9 +67,6 @@ public class AsyncTask {
         ocrResultItemService.saveOrUpdateBatch(ocrResultItems);
     }
 
-    @Transactional
-    public void saveRunTime(Map<TimeType,Long> timeMap){
-        System.out.println(timeMap);
-    }
+
 
 }

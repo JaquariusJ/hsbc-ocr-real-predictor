@@ -1,6 +1,8 @@
 package com._4paradim.hsbc.ocr.server.manager;
 
+import com._4paradim.hsbc.ocr.server.manager.service.OcrPredictorRuntimeService;
 import com._4paradim.hsbc.ocr.server.manager.service.OcrResultItemService;
+import com._4paradim.hsbc.ocr.server.manager.vo.OcrPredictorRuntime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,11 @@ public class OcrResultItemTest {
     @Autowired
     private OcrResultItemService ocrResultItemService;
 
+    @Autowired
+    private OcrPredictorRuntimeService ocrPredictorRuntimeService;
+
     @Test
-    private void test1(){
+    public void test1(){
+        System.out.println(ocrPredictorRuntimeService);
     }
 }
