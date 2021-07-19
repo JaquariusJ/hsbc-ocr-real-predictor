@@ -60,6 +60,7 @@ public class PredictorService {
         }
         //异步发送请求，oss文档，保存数据
         asyncTask.uploadOssAndSaveData(requestVo,resultVo);
+        Thread.sleep(2000);
         return resultVo;
 
     }

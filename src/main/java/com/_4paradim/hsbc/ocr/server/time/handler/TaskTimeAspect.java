@@ -85,6 +85,8 @@ public class TaskTimeAspect {
             }
             //将源方法和参数传递进去
             callback.callback(signature.getMethod(),args,threadLocal.get());
+            //清理
+            threadLocal.remove();
         }
     }
 
@@ -114,9 +116,5 @@ public class TaskTimeAspect {
         threadLocal.set(timeList);
     }
 
-
-    public static void main(String[] args) {
-        System.out.println(CallBack.class.isAssignableFrom(CallBack.class));
-    }
 
 }
