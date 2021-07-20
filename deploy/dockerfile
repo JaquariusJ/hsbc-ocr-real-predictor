@@ -1,2 +1,6 @@
-FROM
+FROM jdk8
 MAINTAINER wujian@4paradigm.com
+USER root
+WORKDIR /root
+COPY hsbc-ocr-real-predictor.jar ~/hsbc-ocr-real-predictor.jar
+ENTRYPOINT ["bin/start.sh"]
