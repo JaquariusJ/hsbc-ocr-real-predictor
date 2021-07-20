@@ -2,5 +2,9 @@ FROM jdk8
 MAINTAINER wujian@4paradigm.com
 USER root
 WORKDIR /root
-COPY hsbc-ocr-real-predictor.jar ~/hsbc-ocr-real-predictor.jar
+RUN mkdir -p hsbc-ocr-real-predictor  &&
+    cd hsbc-ocr-real-predictor &&
+    mkdir bin conf log lib
+COPY hsbc-ocr-real-predictor.jar ~/hsbc-ocr-real-predictor/lib/hsbc-ocr-real-predictor.jar
+COPY start.sh /root/hsbc-ocr-real-predictor/bin
 ENTRYPOINT ["bin/start.sh"]

@@ -1,34 +1,69 @@
-apiVersion: v1
-kind: Pod
+apiVersion: extensions/v1beta1
+kind: Deployment
 metadata:
-  name: bbdm-service
+  name: bbdm-deploy
   namespace: 4pd
   labels:
-    - hsbc-ocr-real-predictor: true
+    app: hsbc-ocr-real-predictor
   spec:
-    containers:
-      - name: bbdm-service
-        images: $image
-        imagePullPolice: IfNotPresent
-        ports:
-          - name: web
-            containerPort: 8080
-            hostPort: 8080
-        resources:
-          limits:
-            cpu:
-            memory:
-          requests:
-            cpu:
-            memory:
-        livenessProbe:
-          httpGet:
-            path: /api/ocr/
-            port: 8080
-            initialDelaySeconds:
-            timeoutSeconds:
-            periodSeconds:
-            successThreshold:
-            failureThreshold:
-        restartPolicy: OnFailure
+    replicas: 2
+    template:
+      metadata:
+        labels:
+          app: hsbc-ocr-real-predictor
+      spec:
+        containers:
+          - name: bbdm-pod
+            images: $image
+            imagePullPolice: IfNotPresent
+            workingDir: /root
+            volumeMounts:
+              - name: hsbc-conf
+                mountPath: /root/hsbc-ocr-real-predictor/conf
+            ports:
+              - name: web
+                containerPort: 8080
+                hostPort: 8080
+            resources:
+              limits:
+                cpu: 1
+                memory: 6Gib
+              requests:
+                cpu: 0.5
+                memory: 1Gib
+            livenessProbe:
+              httpGet:
+                path: /api/ocr/
+                port: 8080
+                initialDelaySeconds: 5
+                timeoutSeconds: 10
+                periodSeconds:  10
+            restartPolicy: OnFailure
+            volumes:
+              - name: hsbc-conf
+                configMap:
+                  name: hsbc-conf
 
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: bbdm-svc
+  namespace: 4pd
+spec:
+  ports:
+  - name: web
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: hsbc-ocr-real-predictor
+
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: 4pd

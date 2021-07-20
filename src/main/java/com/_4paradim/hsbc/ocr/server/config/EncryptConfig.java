@@ -10,7 +10,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @EnableEncryptableProperties
-@PropertySource(name = "EncryptedProperties", value = "classpath:application.properties")
+@PropertySource(name = "EncryptedProperties", value = "classpath:config/application.properties")
 public class EncryptConfig {
 
     @Bean("jasyptStringEncryptor")
