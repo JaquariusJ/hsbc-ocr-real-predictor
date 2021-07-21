@@ -7,14 +7,19 @@ import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
 import org.reflections.Reflections;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -24,18 +29,19 @@ import java.lang.annotation.Annotation;
 import java.util.Set;
 
 @Slf4j
-@Component
-public class RetrofitCluster  {
+public class RetrofitCluster implements BeanFactoryAware {
 
     private static String PACKGE = "com._4paradim.hsbc.ocr.server";
 
     @Autowired
     private AutowireCapableBeanFactory beanFactory;
 
+
+    private BeanFactory mybeanFactory;
+
     @Autowired
     private DefaultListableBeanFactory defaultListableBeanFactory;
 
-    @PostConstruct
     public void init(){
         //扫描改包下的RetrofitClient注解，将被注解类全部创建，并注入到spring容器中
         Reflections f = new Reflections(PACKGE);
@@ -91,4 +97,8 @@ public class RetrofitCluster  {
         Assert.notNull(config.getRetryOnConnectionFailure(), "retryOnConnectionFailure is null");
     }
 
+    @Override
+    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+        this.mybeanFactory = beanFactory;
+    }
 }

@@ -4,6 +4,7 @@ import com._4paradim.hsbc.ocr.server.api.config.SocrConfig;
 import com._4paradim.hsbc.ocr.server.api.vo.SocrRequest;
 import com._4paradim.hsbc.ocr.server.common.annotation.RetrofitClient;
 import com.google.gson.JsonObject;
+import org.springframework.context.annotation.Lazy;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;

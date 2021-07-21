@@ -1,1 +1,0 @@
-java -jar hsbc-ocr-real-predictor.jar

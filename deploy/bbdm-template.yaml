@@ -1,0 +1,72 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ deployName }}
+  namespace: {{ namespace }}
+  labels:
+    app: hsbc-bbdm
+spec:
+  selector:
+     matchLabels:
+        app: hsbc-bbdm
+  replicas: {{ replicas }}
+  template:
+      metadata:
+        labels:
+          app: hsbc-bbdm
+      spec:
+        containers:
+        - name: {{ deployName }}
+          image: {{ imageRegistry }}
+          imagePullPolicy: IfNotPresent
+          workingDir: /root
+          volumeMounts:
+          - name: bbdm-conf
+            mountPath: /root/bbdm/conf
+          ports:
+          - name: web
+            containerPort: {{ port }}
+            hostPort: {{ port }}
+          resources:
+            limits:
+              cpu: {{ cpuLimit }}
+              memory: {{ memoryLimit }}
+            requests:
+              cpu: {{ cpuRequest }}
+              memory: {{ memoryRequest }}
+          livenessProbe:
+            httpGet:
+              path: /ocr/actuator/health
+              port: {{ port }}
+            initialDelaySeconds: 5
+            timeoutSeconds: 10
+            periodSeconds: 10
+        volumes:
+        - name: bbdm-conf
+          configMap:
+            name: bbdm-conf
+
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ deployName }}-svc
+  namespace: {{ namespace }}
+spec:
+  ports:
+  - name: web
+    port: {{ port }}
+    protocol: TCP
+    targetPort: {{ port }}
+  selector:
+    app: hsbc-bbdm
+
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: 4pd

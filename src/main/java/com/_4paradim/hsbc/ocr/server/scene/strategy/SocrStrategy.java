@@ -13,6 +13,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -23,6 +24,7 @@ import java.io.IOException;
 @Component
 public class SocrStrategy implements OcrStrategy<SocrRequest,OcrResultVO> {
 
+    @Lazy
     @Autowired
     private SocrService socrService;
 

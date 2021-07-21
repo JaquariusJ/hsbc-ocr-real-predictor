@@ -1,10 +1,7 @@
-FROM jdk8
+FROM openjdk:8u102-jdk
 MAINTAINER wujian@4paradigm.com
 USER root
 WORKDIR /root
-RUN mkdir -p hsbc-ocr-real-predictor  &&
-    cd hsbc-ocr-real-predictor &&
-    mkdir bin conf log lib
-COPY hsbc-ocr-real-predictor.jar ~/hsbc-ocr-real-predictor/lib/hsbc-ocr-real-predictor.jar
-COPY start.sh /root/hsbc-ocr-real-predictor/bin
-ENTRYPOINT ["bin/start.sh"]
+RUN mkdir bbdm && chmod -R 777 bbdm
+COPY ./bbdm /root/bbdm
+ENTRYPOINT ["/bin/bash","/root/bbdm/bin/start.sh"]
