@@ -22,7 +22,7 @@ public class ThreadPoolConfig {
 
     @Bean("threadPoolExecutor")
     public ExecutorService threadPoolExecutor(){
-        ThreadFactory threadPoolFactory = new ThreadFactoryBuilder().setNameFormat("async-thread-").build();
+        ThreadFactory threadPoolFactory = new ThreadFactoryBuilder().setNameFormat("async-thread").build();
         //使用tomcat中的线程池，基于jdk里的线程池做了优化
         ThreadPoolExecutor threadPool = new ThreadPoolExecutor(
                 10,16,

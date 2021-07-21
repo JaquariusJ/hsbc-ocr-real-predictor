@@ -13,6 +13,7 @@ import com._4paradim.hsbc.ocr.server.scene.vo.OcrResultVO;
 import com._4paradim.hsbc.ocr.server.web.vo.PredictorRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -49,22 +50,42 @@ public class AsyncTask {
         String osspath = filename;
         InputStream inputStream = requestVO.getFileVO().getInputStream();
         log.info("upload to oss,file: "+filename+"  >>>  "+osspath);
-        //ossService.uploadFileInputStream(inputStream,osspath);
+        try {
+            ossService.uploadFileInputStream(inputStream,osspath);
+        } catch (Exception e) {
+            ExceptionUtils.printRootCauseStackTrace(e);
+            log.error(e.getMessage());
+        }
         //保存请求的数据
-        OcrPredictorInfo ocrPredictorInfo = ocrPredictorInfoService.request2PredictorInfo(requestVO);
-        ocrPredictorInfo.setId(requestVO.getRequestId());
-        ocrPredictorInfo.setOssPath(osspath);
-        ocrPredictorInfo.setFileMd5(DigestUtils.md5Hex(inputStream));
-        ocrPredictorInfoService.saveOrUpdate(ocrPredictorInfo);
+        try {
+            OcrPredictorInfo ocrPredictorInfo = ocrPredictorInfoService.request2PredictorInfo(requestVO);
+            ocrPredictorInfo.setId(requestVO.getRequestId());
+            ocrPredictorInfo.setOssPath(osspath);
+            ocrPredictorInfo.setFileMd5(DigestUtils.md5Hex(inputStream));
+            ocrPredictorInfoService.saveOrUpdate(ocrPredictorInfo);
+        } catch (IOException e) {
+            ExceptionUtils.printRootCauseStackTrace(e);
+            log.error(e.getMessage());
+        }
         //保存原始的ocr数据
-        OcrOriginResult ocrOriginResult = new OcrOriginResult();
-        ocrOriginResult.setId(requestVO.getRequestId());
-        ocrOriginResult.setOcrResult(ocrResultVO.getOrigin_result());
-        ocrOriginResultService.saveOrUpdate(ocrOriginResult);
+        try {
+            OcrOriginResult ocrOriginResult = new OcrOriginResult();
+            ocrOriginResult.setId(requestVO.getRequestId());
+            ocrOriginResult.setOcrResult(ocrResultVO.getOrigin_result());
+            ocrOriginResultService.saveOrUpdate(ocrOriginResult);
+        } catch (Exception e) {
+            ExceptionUtils.printRootCauseStackTrace(e);
+            log.error(e.getMessage());
+        }
         //保存ocritem的数据
-        List<OcrResultItem> ocrResultItems = ocrResultItemService.request2OcrResultItems(ocrResultVO);
-        ocrResultItems.stream().forEach(n->n.setDocId(requestVO.getRequestId()));
-        ocrResultItemService.saveOrUpdateBatch(ocrResultItems);
+        try {
+            List<OcrResultItem> ocrResultItems = ocrResultItemService.request2OcrResultItems(ocrResultVO);
+            ocrResultItems.stream().forEach(n->n.setDocId(requestVO.getRequestId()));
+            ocrResultItemService.saveOrUpdateBatch(ocrResultItems);
+        } catch (Exception e) {
+            ExceptionUtils.printRootCauseStackTrace(e);
+            log.error(e.getMessage());
+        }
     }
 
 
