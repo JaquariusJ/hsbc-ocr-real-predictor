@@ -12,11 +12,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class EncryptorTools {
 
-    @Autowired
-    private StringEncryptor stringEncryptor;
+
 
     @Test
     public void test1() {
+        EncryptConfig encryptConfig = new EncryptConfig();
+        StringEncryptor stringEncryptor = encryptConfig.stringEncryptor();
         String ss = "123456";
         System.out.println(ss);
         System.out.println(stringEncryptor.encrypt(ss));
