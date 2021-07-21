@@ -10,6 +10,8 @@ import com._4paradim.hsbc.ocr.server.web.types.DocType;
 import com._4paradim.hsbc.ocr.server.web.vo.PredictorRequest;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;

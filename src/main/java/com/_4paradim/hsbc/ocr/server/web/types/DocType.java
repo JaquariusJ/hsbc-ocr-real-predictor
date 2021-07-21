@@ -34,5 +34,9 @@ public enum DocType {
         return Arrays.stream(DocType.values()).filter(n -> StringUtils.endsWithIgnoreCase(docType,n.getType())).findFirst().orElse(null);
     }
 
+    public static DocType getValueByScene(String docType){
+        return Arrays.stream(DocType.values()).filter(n -> StringUtils.endsWithIgnoreCase(docType,n.getScene())).findFirst().orElse(null);
+    }
+
 
 }

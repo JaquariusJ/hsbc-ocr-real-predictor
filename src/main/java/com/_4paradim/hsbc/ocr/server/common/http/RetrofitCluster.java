@@ -1,6 +1,5 @@
 package com._4paradim.hsbc.ocr.server.common.http;
 
-import com._4paradim.hsbc.ocr.server.api.config.SocrConfig;
 import com._4paradim.hsbc.ocr.server.common.annotation.RetrofitClient;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.ConnectionPool;
@@ -11,21 +10,11 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
-import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import javax.annotation.PostConstruct;
-import java.lang.annotation.Annotation;
 import java.util.Set;
 
 @Slf4j
@@ -50,6 +39,7 @@ public class RetrofitCluster implements BeanFactoryAware {
             //获取该svc的RetrofitClient注解
             RetrofitClient annotation = svcClass.getAnnotation(RetrofitClient.class);
             Class configClass = annotation.config();
+            System.out.println(configClass);
             RetrofitConfig retrofitConfig = (RetrofitConfig) beanFactory.getBean(configClass);
             //获取配置类，对配置项进行检查
             checkConfig(retrofitConfig);

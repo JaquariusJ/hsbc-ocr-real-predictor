@@ -26,4 +26,9 @@ oss:
 
 
 socr:
-  baseUrl: 172.21.5.83:80
+  idcard:
+    baseUrl: http://172.21.4.145/
+  business:
+    baseUrl: http://172.21.5.83/
+  vat:
+    baseUrl: http://172.21.15.108/

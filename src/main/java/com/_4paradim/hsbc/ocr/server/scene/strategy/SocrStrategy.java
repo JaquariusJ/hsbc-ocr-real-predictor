@@ -1,12 +1,15 @@
 package com._4paradim.hsbc.ocr.server.scene.strategy;
 
-import com._4paradim.hsbc.ocr.server.api.service.SocrService;
+import com._4paradim.hsbc.ocr.server.api.service.BusinessSocrService;
+import com._4paradim.hsbc.ocr.server.api.service.IDCardSocrService;
+import com._4paradim.hsbc.ocr.server.api.service.VATSocrService;
 import com._4paradim.hsbc.ocr.server.api.vo.SocrRequest;
 import com._4paradim.hsbc.ocr.server.time.annotation.TaskTime;
 import com._4paradim.hsbc.ocr.server.time.enums.TimeType;
 import com._4paradim.hsbc.ocr.server.common.exception.BusinessException;
 import com._4paradim.hsbc.ocr.server.common.exception.OcrException;
 import com._4paradim.hsbc.ocr.server.scene.vo.OcrResultVO;
+import com._4paradim.hsbc.ocr.server.web.types.DocType;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -26,15 +29,39 @@ public class SocrStrategy implements OcrStrategy<SocrRequest,OcrResultVO> {
 
     @Lazy
     @Autowired
-    private SocrService socrService;
+    private IDCardSocrService idCardSocrService;
 
+    @Lazy
+    @Autowired
+    private BusinessSocrService businessSocrService;
+
+    @Lazy
+    @Autowired
+    private VATSocrService vatSocrService;
 
     @Override
     @TaskTime(type = TimeType.OCR_TIME)
     public OcrResultVO ocr(SocrRequest socrRequest) throws BusinessException, OcrException, IOException {
+        String scene = socrRequest.getScene();
+        Call<JsonObject> reponse = null;
+        switch (DocType.getValueByScene(scene)){
+            case VAT:
+                reponse = vatSocrService.ocr(socrRequest);
+                break;
+            case IDCard:
+                reponse = idCardSocrService.ocr(socrRequest);
+                break;
+            case BusinessLicense:
+                reponse =businessSocrService.ocr(socrRequest);
+                break;
+            default:
+                break;
 
-        Call<JsonObject> reponse = socrService.ocr(socrRequest);
+        }
+        return toResult(reponse);
+    }
 
+    public OcrResultVO toResult(Call<JsonObject> reponse) throws IOException {
         Response<JsonObject> execute = reponse.execute();
         int code = execute.code();
         if(code != 200){
@@ -78,4 +105,6 @@ public class SocrStrategy implements OcrStrategy<SocrRequest,OcrResultVO> {
         }
         return ocrResultVO;
     }
+
+
 }

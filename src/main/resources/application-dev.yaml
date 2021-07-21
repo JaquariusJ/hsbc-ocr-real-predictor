@@ -25,4 +25,9 @@ oss:
 
 
 socr:
-  baseUrl: http://localhost:8090/
+  idcard:
+    baseUrl: http://localhost:8090/
+  business:
+    baseUrl: http://localhost:8090/
+  vat:
+    baseUrl: http://localhost:8090/
