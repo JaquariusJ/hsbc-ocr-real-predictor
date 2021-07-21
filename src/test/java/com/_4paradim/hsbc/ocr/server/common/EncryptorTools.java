@@ -4,6 +4,7 @@ import com._4paradim.hsbc.ocr.server.config.EncryptConfig;
 import org.jasypt.encryption.StringEncryptor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -11,11 +12,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class EncryptorTools {
 
+    @Autowired
+    private StringEncryptor stringEncryptor;
+
     @Test
     public void test1() {
-        EncryptConfig tools = new EncryptConfig();
-        StringEncryptor stringEncryptor = tools.stringEncryptor();
-        String ss = "UI_system";
+        String ss = "123456";
         System.out.println(ss);
         System.out.println(stringEncryptor.encrypt(ss));
     }
