@@ -9,18 +9,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
 public class EncryptorTools {
 
 
-
-    @Test
-    public void test1() {
+    public static void main(String[] args) {
         EncryptConfig encryptConfig = new EncryptConfig();
         StringEncryptor stringEncryptor = encryptConfig.stringEncryptor();
-        String ss = "123456";
+        String ss = "root";
         System.out.println(ss);
         System.out.println(stringEncryptor.encrypt(ss));
+        System.out.println(stringEncryptor.decrypt("fFUS3OuYkmjUrF8PZh28U0GNgu4DyoGYsfRjUtN5FQE3bm77p1xjPPNpu33LBqRw"));
     }
 }
 

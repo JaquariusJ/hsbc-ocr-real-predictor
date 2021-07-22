@@ -19,8 +19,10 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
@@ -47,26 +49,23 @@ public class AsyncTask {
     @TaskTime(type = TimeType.ASYNC_TIME,callback = RunTimeCallBack.class,desc = "upload oss,save save request and result data,")
     public void uploadOssAndSaveData(PredictorRequest requestVO, OcrResultVO ocrResultVO) throws IOException {
         String filename = requestVO.getFileVO().getOriginalFilename();
-        String osspath = filename;
+        String osspath = "bbdm" + File.separator + LocalDate.now().toString() + File.separator +filename;
         InputStream inputStream = requestVO.getFileVO().getInputStream();
         log.info("upload to oss,file: "+filename+"  >>>  "+osspath);
+        String md5 = "";
         try {
+            md5 = DigestUtils.md5Hex(inputStream);
             ossService.uploadFileInputStream(inputStream,osspath);
         } catch (Exception e) {
             ExceptionUtils.printRootCauseStackTrace(e);
             log.error(e.getMessage());
         }
         //保存请求的数据
-        try {
-            OcrPredictorInfo ocrPredictorInfo = ocrPredictorInfoService.request2PredictorInfo(requestVO);
-            ocrPredictorInfo.setId(requestVO.getRequestId());
-            ocrPredictorInfo.setOssPath(osspath);
-            ocrPredictorInfo.setFileMd5(DigestUtils.md5Hex(inputStream));
-            ocrPredictorInfoService.saveOrUpdate(ocrPredictorInfo);
-        } catch (IOException e) {
-            ExceptionUtils.printRootCauseStackTrace(e);
-            log.error(e.getMessage());
-        }
+        OcrPredictorInfo ocrPredictorInfo = ocrPredictorInfoService.request2PredictorInfo(requestVO);
+        ocrPredictorInfo.setId(requestVO.getRequestId());
+        ocrPredictorInfo.setOssPath(osspath);
+        ocrPredictorInfo.setFileMd5(md5);
+        ocrPredictorInfoService.saveOrUpdate(ocrPredictorInfo);
         //保存原始的ocr数据
         try {
             OcrOriginResult ocrOriginResult = new OcrOriginResult();

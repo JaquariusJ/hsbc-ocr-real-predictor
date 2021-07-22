@@ -58,6 +58,9 @@ public class SocrStrategy implements OcrStrategy<SocrRequest,OcrResultVO> {
                 break;
 
         }
+        String url = reponse.request().url().toString();
+        String method = reponse.request().method();
+        log.info("method : ["+method+"], url: ["+url+"],scene: ["+socrRequest.getScene()+"],parameters: ["+socrRequest.getParameters()+"],imageSize:["+socrRequest.getImage().length()+"]");
         return toResult(reponse);
     }
 

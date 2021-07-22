@@ -67,7 +67,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>21.0</version>
+            <version>30.0-jre</version>
         </dependency>
 
 
@@ -134,16 +134,16 @@
         </dependency>
 
 <!--  配置文件加密   -->
-        <dependency>
-            <groupId>com.github.ulisesbocchio</groupId>
-            <artifactId>jasypt-spring-boot-starter</artifactId>
-            <version>2.1.1</version>
-        </dependency>
 <!--        <dependency>-->
 <!--            <groupId>com.github.ulisesbocchio</groupId>-->
-<!--            <artifactId>jasypt-spring-boot</artifactId>-->
-<!--            <version>3.0.3</version>-->
+<!--            <artifactId>jasypt-spring-boot-starter</artifactId>-->
+<!--            <version>2.1.1</version>-->
 <!--        </dependency>-->
+        <dependency>
+            <groupId>com.github.ulisesbocchio</groupId>
+            <artifactId>jasypt-spring-boot</artifactId>
+            <version>3.0.3</version>
+        </dependency>
 
 <!--   commons     -->
 
@@ -229,11 +229,7 @@
             <version>${imageio.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>30.0-jre</version>
-        </dependency>
+
 
     </dependencies>
 

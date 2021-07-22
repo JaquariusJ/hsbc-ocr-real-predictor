@@ -2,6 +2,6 @@ FROM openjdk:8u102-jdk
 MAINTAINER wujian@4paradigm.com
 USER root
 WORKDIR /root
-RUN mkdir bbdm && chmod -R 777 bbdm
-COPY ./bbdm /root/bbdm
+RUN mkdir /root/bbdm &&  chmod -R 777 /root/bbdm
+COPY ./bbdm/ /root/bbdm/
 ENTRYPOINT ["/bin/bash","/root/bbdm/bin/start.sh"]

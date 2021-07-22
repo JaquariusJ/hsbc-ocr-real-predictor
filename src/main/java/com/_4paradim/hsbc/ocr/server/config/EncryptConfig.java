@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
+@EnableEncryptableProperties
+@PropertySource(name="" ,value = "classpath:application.properties")
 public class EncryptConfig {
 
     @Bean("jasyptStringEncryptor")
@@ -21,7 +23,7 @@ public class EncryptConfig {
         config.setPoolSize("1");
         config.setProviderName("SunJCE");
         config.setSaltGeneratorClassName("org.jasypt.salt.RandomSaltGenerator");
-        config.setIvGeneratorClassName("org.jasypt.salt.NoOpIVGenerator");
+        config.setIvGeneratorClassName("org.jasypt.iv.RandomIvGenerator");
         config.setStringOutputType("base64");
         encryptor.setConfig(config);
         return encryptor;

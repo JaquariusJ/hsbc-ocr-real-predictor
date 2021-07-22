@@ -17,7 +17,7 @@ spec:
       spec:
         containers:
         - name: {{ deployName }}
-          image: {{ imageRegistry }}
+          image: {{ mirror }}
           imagePullPolicy: IfNotPresent
           workingDir: /root
           volumeMounts:
@@ -58,11 +58,13 @@ metadata:
 spec:
   ports:
   - name: web
+    #nodePort: 30027
     port: {{ port }}
     protocol: TCP
     targetPort: {{ port }}
   selector:
     app: hsbc-bbdm
+  #type: NodePort
 
 
 ---

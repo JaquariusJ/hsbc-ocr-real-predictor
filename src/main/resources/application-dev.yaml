@@ -1,8 +1,8 @@
 spring:
   datasource:
     url: jdbc:mysql://115.29.238.138:3306/ocr_services?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useLegacyDatetimeCode=false
-    username: ENC(T8scUbfi6yXdfRiAmGkhJe+vKzb7fQu6maHJA5xFvd0=)
-    password: ENC(spAuNox/m2kkhsPz7yT5wK6AkC1XzdOVkxzcPlj+Azc=)
+    username: ENC(HNXUkpEldHTfRhr2ZGH6g/aAlBPORuhKR6SD65NQjObRMwzLa/qvtf7HoQULdCdI)
+    password: ENC(fFUS3OuYkmjUrF8PZh28U0GNgu4DyoGYsfRjUtN5FQE3bm77p1xjPPNpu33LBqRw)
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.zaxxer.hikari.HikariDataSource
     hikari:

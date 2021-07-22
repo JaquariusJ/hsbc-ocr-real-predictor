@@ -2,6 +2,7 @@ package com._4paradim.hsbc.ocr.server.api.service;
 
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
+import com.aliyun.oss.model.ObjectMetadata;
 import com.aliyun.oss.model.PutObjectRequest;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +40,10 @@ public class OssService {
             }
             ossClient = new OSSClientBuilder().build(endpointEcs, accessKeyId, accessKeySecret);
             PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, objectName, file);
+            //设置kms加密
+            ObjectMetadata metadata = new ObjectMetadata();
+            metadata.setHeader("x-oss-server-side-encryption","AES256");
+            putObjectRequest.setMetadata(metadata);
             ossClient.putObject(putObjectRequest);
             log.info(file.getName() + "上传oss成功");
         } finally {
@@ -56,7 +61,12 @@ public class OssService {
                 return;
             }
             ossClient = new OSSClientBuilder().build(endpointEcs, accessKeyId, accessKeySecret);
-            ossClient.putObject(bucketName,objectName,fileInputStream);
+            PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, objectName, fileInputStream);
+            //设置kms加密
+            ObjectMetadata metadata = new ObjectMetadata();
+            metadata.setHeader("x-oss-server-side-encryption","AES256");
+            putObjectRequest.setMetadata(metadata);
+            ossClient.putObject(putObjectRequest);
             log.info(objectName + "上传oss成功");
         } finally {
             if (ossClient != null) {
