@@ -43,6 +43,8 @@ public class AsyncTask {
     @Autowired
     private OcrPredictorInfoService ocrPredictorInfoService;
 
+    private DigestUtils digestUtils = new DigestUtils("MD5");
+
 
     @Async("threadPoolExecutor")
     @Transactional
@@ -54,7 +56,7 @@ public class AsyncTask {
         log.info("upload to oss,file: "+filename+"  >>>  "+osspath);
         String md5 = "";
         try {
-            md5 = DigestUtils.md5Hex(inputStream);
+            md5 = digestUtils.digestAsHex(inputStream);
             ossService.uploadFileInputStream(inputStream,osspath);
         } catch (Exception e) {
             ExceptionUtils.printRootCauseStackTrace(e);

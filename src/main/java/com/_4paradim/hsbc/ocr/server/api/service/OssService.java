@@ -45,7 +45,7 @@ public class OssService {
             metadata.setHeader("x-oss-server-side-encryption","AES256");
             putObjectRequest.setMetadata(metadata);
             ossClient.putObject(putObjectRequest);
-            log.info(file.getName() + "上传oss成功");
+            log.info(file.getName() + "上传oss成功"+",bucketName: "+bucketName+",objectName: "+objectName);
         } finally {
             if (ossClient != null) {
                 ossClient.shutdown();

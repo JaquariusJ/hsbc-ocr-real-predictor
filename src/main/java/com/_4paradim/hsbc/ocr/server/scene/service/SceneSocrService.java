@@ -30,6 +30,9 @@ public class SceneSocrService implements SceneService<OcrResultVO, PredictorRequ
         String docType = requestVo.getPredictorRequestData().getDocType();
         String basefile = Base64.encodeBase64String(requestVo.getFileVO().getBytes());
         DocType docTypeEnum = DocType.getValueByType(docType);
+        if(docTypeEnum == null){
+            throw new IllegalArgumentException("doc Type "+docType+" error! no config");
+        }
         SocrRequest socrRequest = new SocrRequest();
         socrRequest.setImage(basefile);
         socrRequest.setScene(docTypeEnum.getScene());
