@@ -13,15 +13,14 @@ import com._4paradim.hsbc.ocr.server.scene.vo.OcrResultVO;
 import com._4paradim.hsbc.ocr.server.web.vo.PredictorRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -55,9 +54,16 @@ public class AsyncTask {
         InputStream inputStream = requestVO.getFileVO().getInputStream();
         log.info("upload to oss,file: "+filename+"  >>>  "+osspath);
         String md5 = "";
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        int len;
+        while((len = inputStream.read(buffer) )>-1){
+            outputStream.write(buffer,0,len);
+        }
+        outputStream.flush();
         try {
-            md5 = digestUtils.digestAsHex(inputStream);
-            ossService.uploadFileInputStream(inputStream,osspath);
+            md5 = digestUtils.digestAsHex(new ByteArrayInputStream(outputStream.toByteArray()));
+            ossService.uploadFileInputStream(new ByteArrayInputStream(outputStream.toByteArray()),osspath);
         } catch (Exception e) {
             ExceptionUtils.printRootCauseStackTrace(e);
             log.error(e.getMessage());

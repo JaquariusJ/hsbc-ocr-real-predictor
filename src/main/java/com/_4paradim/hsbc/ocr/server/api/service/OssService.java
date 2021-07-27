@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Date;
@@ -56,10 +57,6 @@ public class OssService {
     public void uploadFileInputStream(InputStream fileInputStream, String objectName) {
         OSS ossClient = null;
         try {
-            if (fileInputStream == null) {
-                log.error("文件流不存在，无法上传oss");
-                return;
-            }
             ossClient = new OSSClientBuilder().build(endpointEcs, accessKeyId, accessKeySecret);
             PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, objectName, fileInputStream);
             //设置kms加密
@@ -71,6 +68,11 @@ public class OssService {
         } finally {
             if (ossClient != null) {
                 ossClient.shutdown();
+                try {
+                    fileInputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

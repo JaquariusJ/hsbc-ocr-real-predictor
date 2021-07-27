@@ -22,8 +22,6 @@ oss:
   accessKeySecret: 11
   bucketName: cdg-ocr-oss
 
-
-
 socr:
   idcard:
     baseUrl: http://localhost:8090/

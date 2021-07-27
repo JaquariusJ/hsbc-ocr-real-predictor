@@ -20,6 +20,9 @@ spec:
           image: {{ mirror }}
           imagePullPolicy: IfNotPresent
           workingDir: /root
+          env:
+          - name: TZ
+            value: Asia/Shanghai
           volumeMounts:
           - name: bbdm-conf
             mountPath: /root/bbdm/conf
@@ -58,13 +61,13 @@ metadata:
 spec:
   ports:
   - name: web
-    #nodePort: 30027
+    nodePort: 30027
     port: {{ port }}
     protocol: TCP
     targetPort: {{ port }}
   selector:
     app: hsbc-bbdm
-  #type: NodePort
+  type: NodePort
 
 
 ---

@@ -2,7 +2,7 @@
 dockerRegistry=115.29.238.138:5000
 mirror="${dockerRegistry}/bbdm-svc:v_"$(date +"%Y%m%d%H%M%S")
 deployName=bbdm
-port=8092
+port=8082
 namespace=4pd
 replicas=1
 cpuRequest=500m
@@ -38,12 +38,12 @@ echo "docker push ${mirror}"
 #docker push ${mirror}
 
 echo "---------------------------重新构建configmap-------------------------"
-echo "kubectl delete cm bbdm-conf -n $namespace"
-kubectl delete cm bbdm-conf -n $namespace
-echo "kubectl create cm bbdm-conf --from-file-./bbdm/conf -n $namespace"
-kubectl create cm bbdm-conf --from-file-./bbdm/conf -n $namespace
+echo "kubectl delete cm bbdm-conf -n ${namespace}"
+kubectl delete cm bbdm-conf -n ${namespace}
+echo "kubectl create cm bbdm-conf --from-file=./bbdm/conf -n ${namespace}"
+kubectl create cm bbdm-conf --from-file=./bbdm/conf -n ${namespace}
 
-echo "---------------------------部署应用-------------------------"
+echo "---------------------------发布应用-------------------------"
 echo "k apply -f bbdm.yaml"
 kubectl apply -f bbdm.yaml
 

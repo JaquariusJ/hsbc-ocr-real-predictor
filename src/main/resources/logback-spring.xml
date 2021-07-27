@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <configuration>
-    <property name="DEV_LOG_HOME" value="/Users/wujian/IdeaProjects/hsbc-ocr-real-predictor/deploy/bbdm/log"/>
+    <property name="log.path" value="/Users/wujian/IdeaProjects/hsbc-ocr-real-predictor/deploy/bbdm/log"/>
+    <property name="log.pattern" value="%d{yyyy-MM-dd HH:mm:ss} [%p] --- [%t] %c [%L]  :    %m%n"/>
 
     <appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
             <pattern>
-                %d{yyyy-MM-dd HH:mm:ss} [%p] --- [%t] %c [%L]  :    %m%n
+                ${log.pattern}
             </pattern>
         </layout>
     </appender>
@@ -19,18 +20,13 @@
 <!--        </filter>-->
         <encoder>
             <pattern>
-                %d{yyyy-MM-dd HH:mm:ss} [%p] --- [%t] %c [%L]  :    %m%n
+                ${log.pattern}
             </pattern>
         </encoder>
         <!--滚动策略-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--路径-->
-            <springProfile name="dev">
-                <fileNamePattern>${DEV_LOG_HOME}/info.%d.log</fileNamePattern>
-            </springProfile>
-            <springProfile name="prod">
-                <fileNamePattern>/root/bbdm/log/info.%d.log</fileNamePattern>
-            </springProfile>
+                <fileNamePattern>${log.path}/info.%d{yyyy-MM-dd}.log</fileNamePattern>
 
         </rollingPolicy>
     </appender>
@@ -41,17 +37,12 @@
         </filter>
         <encoder>
             <pattern>
-                %d{yyyy-MM-dd HH:mm:ss} [%p] --- [%t] %c [%L]  :    %m%n
+                ${log.pattern}
             </pattern>
         </encoder>
         <!--滚动策略-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <springProfile name="dev">
-                <fileNamePattern>${DEV_LOG_HOME}/error.%d.log</fileNamePattern>
-            </springProfile>
-            <springProfile name="prod">
-                <fileNamePattern>/root/bbdm/log/error.%d.log</fileNamePattern>
-            </springProfile>
+            <fileNamePattern>${log.path}/error.%d{yyyy-MM-dd}.log</fileNamePattern>
         </rollingPolicy>
     </appender>
 
