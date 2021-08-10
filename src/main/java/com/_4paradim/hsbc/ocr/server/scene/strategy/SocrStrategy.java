@@ -4,27 +4,37 @@ import com._4paradim.hsbc.ocr.server.api.service.BusinessSocrService;
 import com._4paradim.hsbc.ocr.server.api.service.IDCardSocrService;
 import com._4paradim.hsbc.ocr.server.api.service.VATSocrService;
 import com._4paradim.hsbc.ocr.server.api.vo.SocrRequest;
+import com._4paradim.hsbc.ocr.server.scene.config.KeyConfig;
 import com._4paradim.hsbc.ocr.server.time.annotation.TaskTime;
 import com._4paradim.hsbc.ocr.server.time.enums.TimeType;
 import com._4paradim.hsbc.ocr.server.common.exception.BusinessException;
 import com._4paradim.hsbc.ocr.server.common.exception.OcrException;
 import com._4paradim.hsbc.ocr.server.scene.vo.OcrResultVO;
 import com._4paradim.hsbc.ocr.server.web.types.DocType;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.Maps;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import retrofit2.Call;
 import retrofit2.Response;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Component
+@Data
 public class SocrStrategy implements OcrStrategy<SocrRequest,OcrResultVO> {
 
     @Lazy
@@ -38,6 +48,12 @@ public class SocrStrategy implements OcrStrategy<SocrRequest,OcrResultVO> {
     @Lazy
     @Autowired
     private VATSocrService vatSocrService;
+
+    @Autowired
+    private KeyConfig keyConfig;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Override
     @TaskTime(type = TimeType.OCR_TIME)
@@ -61,7 +77,21 @@ public class SocrStrategy implements OcrStrategy<SocrRequest,OcrResultVO> {
         String url = reponse.request().url().toString();
         String method = reponse.request().method();
         log.info("method : ["+method+"], url: ["+url+"],scene: ["+socrRequest.getScene()+"],parameters: ["+socrRequest.getParameters()+"],imageSize:["+socrRequest.getImage().length()+"]");
-        return toResult(reponse);
+        OcrResultVO ocrResultVO = toResult(reponse);
+        Map<String, Object> newKeyMap = Maps.newHashMap();
+        Map<String, Object> keyMap = keyConfig.getKey();
+        DocType docType = DocType.getValueByScene(scene);
+        Map<String,String> keyConfigMap= (Map<String, String>) keyMap.get(docType.getType().toLowerCase());
+        keyConfigMap.forEach((new_key,old_key)->{
+            boolean exists = ocrResultVO.getElement().containsKey(old_key);
+            Object v = null;
+            if(exists){
+                v = ocrResultVO.getElement().get(old_key);
+            }
+            newKeyMap.put(new_key,v);
+        });
+        ocrResultVO.setElement(newKeyMap);
+        return ocrResultVO;
     }
 
     public OcrResultVO toResult(Call<JsonObject> reponse) throws IOException {

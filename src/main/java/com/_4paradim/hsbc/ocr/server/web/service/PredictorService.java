@@ -22,8 +22,9 @@ public class PredictorService {
 
     public OcrResultVO predictor(PredictorRequest requestVo) throws Exception {
         OcrResultVO resultVo = sceneSocrService.ocr(requestVo);
+
         //异步发送请求，oss文档，保存数据
-        asyncTask.uploadOssAndSaveData(requestVo,resultVo);
+        //asyncTask.uploadOssAndSaveData(requestVo,resultVo);
         return resultVo;
 
     }

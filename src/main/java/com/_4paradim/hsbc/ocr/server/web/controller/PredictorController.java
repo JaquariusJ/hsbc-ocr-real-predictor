@@ -4,8 +4,6 @@ package com._4paradim.hsbc.ocr.server.web.controller;
 import cn.hutool.core.util.IdUtil;
 import com._4paradim.hsbc.ocr.server.time.annotation.TaskTime;
 import com._4paradim.hsbc.ocr.server.time.enums.TimeType;
-import com._4paradim.hsbc.ocr.server.common.exception.BusinessException;
-import com._4paradim.hsbc.ocr.server.common.exception.OcrException;
 import com._4paradim.hsbc.ocr.server.common.utils.ParamValidationUtils;
 import com._4paradim.hsbc.ocr.server.scene.vo.OcrResultVO;
 import com._4paradim.hsbc.ocr.server.web.service.PredictorService;
@@ -24,11 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.util.UUID;
 
 @Slf4j
 @RestController
